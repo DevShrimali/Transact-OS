@@ -177,8 +177,8 @@ export function TaxConfig() {
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Financial Strategy</Badge>
-          <h1 className="text-4xl font-black tracking-tighter">Tax Protocol Mapping</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Financial Strategy</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Tax Protocol Mapping</h1>
           <p className="text-muted-foreground font-medium">Configure nested fiscal policies and statutory compliance layers.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -357,7 +357,7 @@ export function TaxConfig() {
                    <div className="h-2 w-2 rounded-full bg-blue-500" /> Standard Rules (2)
                 </div>
              </div>
-             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 italic">Fiscally secure via UIMS Vault</p>
+             <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Fiscally secure via UIMS Vault</p>
           </div>
         </Card>
       </motion.div>
@@ -383,19 +383,19 @@ export function TaxConfig() {
       {/* Configuration Hub (Sheet) */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">
-          <div className="px-8 pb-32">
-            <SheetHeader className="mt-6 mb-10">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4 shadow-inner border border-primary/20">
-                <Receipt className="h-6 w-6" />
+          <div className="px-10 pb-32 pt-10">
+            <SheetHeader className="mb-12">
+              <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 shadow-inner border border-primary/20">
+                <Receipt className="h-7 w-7" />
               </div>
-              <SheetTitle className="text-3xl font-black tracking-tighter">Vector Definition</SheetTitle>
+              <SheetTitle className="text-3xl font-black tracking-tight">Vector Definition</SheetTitle>
               <SheetDescription className="text-base font-medium">Design the parameters for a new fiscal tracking rule.</SheetDescription>
             </SheetHeader>
 
-            <div className="space-y-10">
+            <div className="space-y-12">
               {/* Architecture Type */}
-              <section className="space-y-4">
-                 <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Structural Blueprint</Label>
+              <section className="space-y-6">
+                 <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Structural Blueprint</Label>
                  <div className="grid grid-cols-2 gap-4">
                     {[
                       { id: false, label: "Simple Vector", sub: "Flat rate logic", icon: Calculator },
@@ -429,36 +429,36 @@ export function TaxConfig() {
               </section>
 
               {/* Identification */}
-              <section className="space-y-6 bg-muted/30 p-8 rounded-3xl border border-muted shadow-inner">
+              <section className="space-y-6">
                 <div className="flex items-center gap-2 mb-2">
                    <div className="w-1.5 h-6 bg-primary rounded-full" />
-                   <h3 className="font-black text-lg tracking-tight">Technical Identification</h3>
+                   <h3 className="font-black text-xl tracking-tight">Technical Identification</h3>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2.5">
-                    <Label className="text-xs font-black uppercase tracking-widest opacity-60">System Registry Code</Label>
-                    <Input className="h-12 text-sm font-bold border-none shadow-sm focus-visible:ring-primary/20" placeholder="e.g., TAX_MOD_V1" />
+                    <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">System Registry Code</Label>
+                    <Input className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold" placeholder="e.g., TAX_MOD_V1" />
                   </div>
                   <div className="space-y-2.5">
-                    <Label className="text-xs font-black uppercase tracking-widest opacity-60">Canonical Designation</Label>
-                    <Input className="h-12 text-sm font-bold border-none shadow-sm focus-visible:ring-primary/20" placeholder="e.g., Value Added Tax 5%" />
+                    <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Canonical Designation</Label>
+                    <Input className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold" placeholder="e.g., Value Added Tax 5%" />
                   </div>
                 </div>
 
                 {!isParentTax && (
                   <div className="space-y-2.5">
-                    <Label className="text-xs font-black uppercase tracking-widest opacity-60">Terminal Percentage Rate (%)</Label>
+                    <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Terminal Percentage Rate (%)</Label>
                     <div className="relative">
                        <Percent className="absolute left-4 top-4 h-4 w-4 text-muted-foreground/50" />
-                       <Input type="number" step="0.01" className="h-12 pl-11 text-xl font-black border-none shadow-sm focus-visible:ring-primary/20" placeholder="0.00" />
+                       <Input type="number" step="0.01" className="h-12 pl-11 border-none bg-muted/50 focus-visible:ring-primary/20 font-black text-xl" placeholder="0.00" />
                     </div>
                   </div>
                 )}
 
                 <div className="space-y-2.5">
-                  <Label className="text-xs font-black uppercase tracking-widest opacity-60">Fiscal Classification</Label>
+                  <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Fiscal Classification</Label>
                   <Select>
-                    <SelectTrigger className="h-12 font-bold border-none shadow-sm bg-background">
+                    <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-primary/20">
                        <SelectValue placeholder="Determine jurisdiction type..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -477,7 +477,7 @@ export function TaxConfig() {
                 <section className="space-y-6">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                       <h3 className="font-black text-lg tracking-tight">Component Sub-Vectors</h3>
+                       <h3 className="font-black text-xl tracking-tight">Component Sub-Vectors</h3>
                        <p className="text-xs text-muted-foreground font-medium">Define the atomic taxes that integrate into this cluster.</p>
                     </div>
                     <Button size="sm" variant="ghost" className="h-9 px-4 rounded-full bg-primary/10 text-primary hover:bg-primary/20 font-black text-[11px] uppercase tracking-widest" onClick={addChildTax}>
@@ -530,7 +530,7 @@ export function TaxConfig() {
                         <span className="text-3xl font-black tracking-tighter text-primary">{calculateTotalRate().toFixed(2)}<span className="text-sm ml-1 opacity-50">%</span></span>
                       </div>
                     ) : (
-                      <div className="py-12 flex flex-col items-center gap-3 rounded-3xl border border-dashed border-muted text-center italic">
+                      <div className="py-12 flex flex-col items-center gap-3 rounded-3xl border border-dashed border-muted text-center">
                          <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
                             <Layers className="h-5 w-5 text-muted-foreground/50" />
                          </div>
@@ -540,15 +540,13 @@ export function TaxConfig() {
                   </div>
                 </section>
               )}
+
+              <div className="pt-10 flex gap-4">
+                <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsSheetOpen(false)}>Abort Procedure</Button>
+                <Button className="flex-1 h-12 shadow-xl shadow-primary/20 font-black tracking-wide" onClick={() => setIsSheetOpen(false)}>Deploy Vector System</Button>
+              </div>
             </div>
           </div>
-
-          <SheetFooter className="fixed bottom-0 left-0 right-0 p-8 pt-6 bg-background/80 backdrop-blur-xl border-t z-50">
-            <div className="flex gap-4 w-full">
-               <Button variant="ghost" className="flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest text-muted-foreground hover:bg-muted" onClick={() => setIsSheetOpen(false)}>Abort Procedure</Button>
-               <Button className="flex-1 h-14 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/30" onClick={() => setIsSheetOpen(false)}>Deploy Vector System</Button>
-            </div>
-          </SheetFooter>
         </SheetContent>
       </Sheet>
     </motion.div>

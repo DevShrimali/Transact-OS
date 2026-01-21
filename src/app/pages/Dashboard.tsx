@@ -119,7 +119,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
           <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Executive Overview</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic text-gray-900">Command Center</h1>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Command Center</h1>
           <p className="text-muted-foreground font-medium">Real-time operational dashboard and system status.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -215,7 +215,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }
                          />
                          <Bar dataKey="volume" radius={[4, 4, 0, 0]}>
                             {chartData.map((_, index) => (
-                               <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#2563eb" : "#cbd5e1"} />
+                               <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#1e293b" : "#cbd5e1"} />
                             ))}
                          </Bar>
                       </BarChart>
@@ -228,37 +228,27 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }
         {/* Command Console & Live Event Stream */}
         <motion.div variants={item} className="md:col-span-4 space-y-6">
            {/* Command Console */}
-          <Card className="shadow-lg border-none bg-blue-600 text-white overflow-hidden relative">
-             <div className="absolute top-0 right-0 p-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+          <Card className="shadow-none border-dashed border-2 border-slate-200 bg-white/50 overflow-hidden relative">
              <CardHeader className="relative z-10 pb-2">
-                <CardTitle className="text-lg font-bold tracking-tight flex items-center gap-2 text-white">
-                   <Terminal className="h-5 w-5 text-blue-100" /> Command Console
+                <CardTitle className="text-lg font-bold tracking-tight flex items-center gap-2 text-foreground">
+                   <Terminal className="h-5 w-5 text-blue-600" /> Command Console
                 </CardTitle>
-                <CardDescription className="text-blue-100/80">Frequent operational modules</CardDescription>
+                <CardDescription className="text-muted-foreground font-medium">Frequent operational modules</CardDescription>
              </CardHeader>
              <CardContent className="relative z-10">
                 <div className="grid grid-cols-2 gap-3">
                    {quickActions.map((action, idx) => (
-                      <TooltipProvider key={idx}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button 
-                               onClick={() => onNavigate(action.action)}
-                               className="flex flex-col items-start p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-all hover:scale-[1.02] border border-white/10 text-left group"
-                            >
-                               <div className={cn("p-2 rounded-lg bg-white/10 mb-2 group-hover:bg-white group-hover:text-blue-600 transition-colors" )}>
-                                  <action.icon className="h-4 w-4" />
-                               </div>
-                               <span className="text-xs font-bold text-white leading-tight">{action.label}</span>
-                               <span className="text-[9px] text-blue-100/60 mt-0.5">{action.sub}</span>
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="bottom" className="bg-popover text-popover-foreground border-border">
-                            <p className="font-bold">{action.label}</p>
-                            <p className="text-xs text-muted-foreground">Navigate to module</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <button 
+                         key={idx}
+                         onClick={() => onNavigate(action.action)}
+                         className="flex flex-col items-start p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-all hover:scale-[1.02] border border-slate-100 text-left group"
+                      >
+                         <div className={cn("p-2 rounded-lg bg-white mb-2 shadow-sm group-hover:shadow-md transition-all border border-slate-100")}>
+                            <action.icon className="h-4 w-4 text-blue-600" />
+                         </div>
+                         <span className="text-xs font-bold text-foreground leading-tight">{action.label}</span>
+                         <span className="text-[9px] text-muted-foreground mt-0.5 font-medium">{action.sub}</span>
+                      </button>
                    ))}
                 </div>
              </CardContent>

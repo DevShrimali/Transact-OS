@@ -1,24 +1,23 @@
 import { useState } from 'react';
 import { 
-  Plus, 
-  Minus, 
-  Edit2, 
-  Trash2, 
-  X, 
-  ChevronRight, 
-  ChevronDown, 
-  Folder, 
-  Box, 
-  LayoutGrid, 
-  MapPin,
-  Home,
-  ArrowRight,
   MoreVertical,
   Building2,
   Layers,
-  Container,
   Package,
   Network,
+  Plus,
+  Minus,
+  Edit2,
+  Trash2,
+  X,
+  ChevronRight,
+  ChevronDown,
+  Folder,
+  Box,
+  LayoutGrid,
+  MapPin,
+  Home,
+  ArrowRight,
   Settings2
 } from 'lucide-react';
 import { 
@@ -60,67 +59,9 @@ import {
 } from "@/app/components/ui/alert-dialog";
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/app/components/ui/utils';
+import { initialWarehouseData, WarehouseItem, ItemType } from '@/app/data/mockSystemData';
 
-type ItemType = 'Warehouse' | 'Zone' | 'Rack' | 'Bin';
-
-interface WarehouseItem {
-  id: string;
-  name: string;
-  type: ItemType;
-  children: WarehouseItem[];
-  expanded?: boolean;
-}
-
-// Initial Mock Data
-const INITIAL_DATA: WarehouseItem[] = [
-  {
-    id: 'w-1',
-    name: 'Main Warehouse A',
-    type: 'Warehouse',
-    expanded: true,
-    children: [
-      {
-        id: 'z-1',
-        name: 'Zone 1 - Electronics',
-        type: 'Zone',
-        expanded: true,
-        children: [
-          {
-            id: 'r-1',
-            name: 'Rack A',
-            type: 'Rack',
-            expanded: true,
-            children: [
-              { id: 'b-1', name: 'Bin A-01', type: 'Bin', children: [] },
-              { id: 'b-2', name: 'Bin A-02', type: 'Bin', children: [] },
-            ]
-          },
-          {
-            id: 'r-2',
-            name: 'Rack B',
-            type: 'Rack',
-            expanded: false,
-            children: []
-          }
-        ]
-      },
-      {
-        id: 'z-2',
-        name: 'Zone 2 - Industrial',
-        type: 'Zone',
-        expanded: false,
-        children: []
-      }
-    ]
-  },
-  {
-    id: 'w-2',
-    name: 'Distribution Center South',
-    type: 'Warehouse',
-    expanded: false,
-    children: []
-  }
-];
+const INITIAL_DATA = initialWarehouseData;
 
 const container = {
   hidden: { opacity: 0 },
@@ -381,10 +322,11 @@ export function WarehouseModel() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 pb-20">
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between px-2">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Facility Mapping</h1>
-          <p className="text-muted-foreground mt-1">Design the physical topology of your inventory network.</p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between px-2">
+        <div className="space-y-1">
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Infrastructure Map</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Facility Mapping</h1>
+          <p className="text-muted-foreground font-medium">Design the physical topology of your inventory network.</p>
         </div>
         <div className="flex items-center gap-3">
           <Button variant="outline" className="gap-2">
@@ -505,78 +447,98 @@ export function WarehouseModel() {
 
       {/* Configuration Sheet */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent className="sm:max-w-md">
+        <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">
           {(() => {
             const ActiveIcon = getIcon(newItemType);
             return (
-              <>
-                <SheetHeader>
-                  <SheetTitle className="text-2xl font-bold flex items-center gap-2">
-                    <ActiveIcon className="h-6 w-6 text-primary" />
+              <div className="px-10 pb-32 pt-10">
+                <SheetHeader className="mb-12">
+                   <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 shadow-inner border border-primary/20">
+                      <ActiveIcon className="h-7 w-7" />
+                   </div>
+                  <SheetTitle className="text-3xl font-black tracking-tight">
                     {modalMode === 'add' ? `Define ${newItemType}` : `Modify node`}
                   </SheetTitle>
-                  <SheetDescription>
+                  <SheetDescription className="text-base font-medium">
                     Specify the identification and metadata for this hierarchical component.
                   </SheetDescription>
                 </SheetHeader>
-                <div className="py-8 space-y-6">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-bold">Identification Name</Label>
-                    <Input 
-                      placeholder={`Enter identifier for this ${newItemType.toLowerCase()}`} 
-                      value={itemName}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setItemName(e.target.value)}
-                      autoFocus
-                      className="h-12 text-lg font-medium"
-                      onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleSave()}
-                    />
-                  </div>
-                  
-                  <div className="p-4 rounded-xl bg-muted/50 border space-y-3">
-                    <h5 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Type Blueprint</h5>
-                    <div className="flex gap-4">
-                        <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center shrink-0 border", getTypeColor(newItemType))}>
-                          <ActiveIcon className="h-5 w-5" />
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold">{newItemType}</p>
-                          <p className="text-[11px] leading-relaxed text-muted-foreground">
-                            {newItemType === 'Warehouse' && 'Top-level physical logistics center or storage facility.'}
-                            {newItemType === 'Zone' && 'Logical sub-division (e.g., Ambient, Frozen, Hazmat areas).'}
-                            {newItemType === 'Rack' && 'Physical storage structure supporting vertical stackability.'}
-                            {newItemType === 'Bin' && 'Exact terminal coordinate where stock is physically placed.'}
-                          </p>
-                        </div>
+                
+                <div className="space-y-12">
+                   {/* Core Identity */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                       <div className="w-1.5 h-6 bg-primary rounded-full" />
+                       <h3 className="font-black text-xl tracking-tight">Core Identification</h3>
                     </div>
+                    <div className="space-y-2.5">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Identification Name</Label>
+                      <Input 
+                        placeholder={`Enter identifier for this ${newItemType.toLowerCase()}`} 
+                        value={itemName}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setItemName(e.target.value)}
+                        autoFocus
+                        className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold"
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleSave()}
+                      />
+                    </div>
+                  </section>
+                  
+                  {/* Type Blueprint */}
+                  <section className="space-y-6">
+                     <div className="flex items-center gap-2 mb-2">
+                       <div className="w-1.5 h-6 bg-primary rounded-full" />
+                       <h3 className="font-black text-xl tracking-tight">Structure Blueprint</h3>
+                    </div>
+                    <div className="p-5 rounded-2xl bg-muted/30 border border-transparent hover:border-primary/20 transition-all space-y-4">
+                      <h5 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Component Specification</h5>
+                      <div className="flex gap-5 items-center">
+                          <div className={cn("h-12 w-12 rounded-xl flex items-center justify-center shrink-0 border shadow-sm", getTypeColor(newItemType))}>
+                            <ActiveIcon className="h-6 w-6" />
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-sm font-black text-foreground">{newItemType} Module</p>
+                            <p className="text-xs font-medium leading-relaxed text-muted-foreground">
+                              {newItemType === 'Warehouse' && 'Top-level physical logistics center or storage facility.'}
+                              {newItemType === 'Zone' && 'Logical sub-division (e.g., Ambient, Frozen, Hazmat areas).'}
+                              {newItemType === 'Rack' && 'Physical storage structure supporting vertical stackability.'}
+                              {newItemType === 'Bin' && 'Exact terminal coordinate where stock is physically placed.'}
+                            </p>
+                          </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <div className="pt-10 flex gap-4">
+                     <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsSheetOpen(false)}>Abort</Button>
+                     <Button className="flex-1 h-12 shadow-xl shadow-primary/20 font-black tracking-wide bg-primary text-primary-foreground hover:bg-primary/90" onClick={handleSave}>
+                        {modalMode === 'add' ? `Deploy Node` : 'Update Specs'}
+                     </Button>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })()}
-
-          <SheetFooter className="absolute bottom-0 left-0 right-0 p-6 bg-background border-t">
-            <Button variant="outline" className="flex-1" onClick={() => setIsSheetOpen(false)}>Abort</Button>
-            <Button className="flex-1 shadow-lg shadow-primary/20" onClick={handleSave}>
-               {modalMode === 'add' ? `Deploy Node` : 'Update Specs'}
-            </Button>
-          </SheetFooter>
         </SheetContent>
       </Sheet>
 
       {/* Deconstruction Confirmation */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="border-none shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2 text-destructive">
-               <Trash2 className="h-5 w-5" /> Confirm Node Deconstruction
+             <div className="h-12 w-12 rounded-xl bg-destructive/10 flex items-center justify-center text-destructive mb-4">
+                <Trash2 className="h-6 w-6" />
+             </div>
+            <AlertDialogTitle className="text-xl font-black tracking-tight text-destructive">
+               Confirm Node Deconstruction
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="font-medium text-muted-foreground">
               Are you absolute? Deleting this node will recursively purge <strong>all children</strong> (zones, racks, bins) associated with it. This action is irreversible.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Abort Mission</AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg shadow-destructive/20" onClick={confirmDelete}>
+          <AlertDialogFooter className="mt-6">
+            <AlertDialogCancel className="h-11 font-bold">Abort Mission</AlertDialogCancel>
+            <AlertDialogAction className="h-11 bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg shadow-destructive/20 font-black tracking-wide" onClick={confirmDelete}>
               Confirm Deletion
             </AlertDialogAction>
           </AlertDialogFooter>

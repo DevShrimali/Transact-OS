@@ -79,8 +79,8 @@ export function InvoiceEntry() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Procurement</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Inward Ledger</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Procurement</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Inward Ledger</h1>
           <p className="text-muted-foreground font-medium">Manage inbound stock receipts and vendor invoices.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -93,88 +93,105 @@ export function InvoiceEntry() {
                 <Plus className="h-4 w-4" /> Record Entry
               </Button>
             </SheetTrigger>
-            <SheetContent className="sm:max-w-xl overflow-y-auto w-[90vw]">
-              <SheetHeader className="pb-6 border-b">
-                <SheetTitle className="text-2xl font-black tracking-tighter text-primary">New Inward Entry</SheetTitle>
-                <SheetDescription className="font-medium">
-                  Record receiving particulars and vendor invoice details.
-                </SheetDescription>
-              </SheetHeader>
-              
-              <div className="grid gap-6 py-6">
-                 {/* Vendor Details */}
-                 <div className="grid gap-4">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-muted-foreground">Vendor Information</h3>
-                    <div className="grid gap-2">
-                       <Label>Select Vendor</Label>
-                       <Select>
-                          <SelectTrigger className="h-11">
-                             <SelectValue placeholder="Search vendor..." />
+            <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">
+              <div className="px-10 pb-32 pt-10">
+                <SheetHeader className="mb-12">
+                  <div className="h-14 w-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600 mb-6 shadow-inner border border-blue-500/20">
+                    <FileText className="h-7 w-7" />
+                  </div>
+                  <SheetTitle className="text-3xl font-black tracking-tight">New Inward Entry</SheetTitle>
+                  <SheetDescription className="text-base font-medium">
+                    Record receiving particulars and vendor invoice details.
+                  </SheetDescription>
+                </SheetHeader>
+                
+                <div className="space-y-12">
+                  {/* Vendor Information */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-blue-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Vendor Information</h3>
+                    </div>
+                    <div className="space-y-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Select Vendor</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-blue-500/20">
+                            <SelectValue placeholder="Search vendor..." />
                           </SelectTrigger>
                           <SelectContent>
-                             <SelectItem value="apex">Apex Industrial</SelectItem>
-                             <SelectItem value="quantum">Quantum Components</SelectItem>
+                            <SelectItem value="apex" className="font-bold">Apex Industrial</SelectItem>
+                            <SelectItem value="quantum" className="font-bold">Quantum Components</SelectItem>
                           </SelectContent>
-                       </Select>
+                        </Select>
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Invoice Ref.</Label>
+                          <Input 
+                            placeholder="INV-2024-XXX" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-blue-500/20 font-mono uppercase font-bold" 
+                          />
+                        </div>
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Invoice Date</Label>
+                          <Input 
+                            type="date" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-blue-500/20 font-bold" 
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                       <div className="grid gap-2">
-                          <Label>Invoice Ref.</Label>
-                          <Input placeholder="INV-2024-XXX" className="h-11 font-mono uppercase" />
-                       </div>
-                       <div className="grid gap-2">
-                          <Label>Invoice Date</Label>
-                          <Input type="date" className="h-11" />
-                       </div>
-                    </div>
-                 </div>
+                  </section>
 
-                 <Separator />
+                  {/* Line Items */}
+                  <section className="space-y-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-6 bg-blue-500 rounded-full" />
+                        <h3 className="font-black text-xl tracking-tight">Line Items</h3>
+                      </div>
+                      <Button variant="outline" size="sm" className="h-8 text-xs font-bold">+ Add Row</Button>
+                    </div>
+                    <div className="border rounded-xl overflow-hidden bg-muted/20">
+                      <Table>
+                        <TableHeader className="bg-muted/50">
+                          <TableRow>
+                            <TableHead className="h-9 text-[10px] font-black uppercase">Item</TableHead>
+                            <TableHead className="h-9 text-[10px] font-black uppercase w-20">Qty</TableHead>
+                            <TableHead className="h-9 text-[10px] font-black uppercase w-24 text-right">Amnt</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {[1, 2].map(i => (
+                            <TableRow key={i}>
+                              <TableCell className="py-2">
+                                <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 placeholder:text-muted-foreground/50" placeholder="Search item..." />
+                              </TableCell>
+                              <TableCell className="py-2">
+                                <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 font-mono" placeholder="0" />
+                              </TableCell>
+                              <TableCell className="py-2 text-right">
+                                <span className="font-mono text-xs">$0.00</span>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                    <div className="flex justify-end gap-6 text-sm pt-4">
+                      <div className="text-muted-foreground font-medium">Subtotal: <span className="text-foreground">$0.00</span></div>
+                      <div className="text-muted-foreground font-medium">Tax: <span className="text-foreground">$0.00</span></div>
+                      <div className="font-black text-primary">Total: $0.00</div>
+                    </div>
+                  </section>
 
-                 {/* Items */}
-                 <div className="grid gap-4">
-                    <div className="flex items-center justify-between">
-                       <h3 className="text-sm font-black uppercase tracking-wider text-muted-foreground">Line Items</h3>
-                       <Button variant="outline" size="sm" className="h-8 text-xs font-bold">+ Add Row</Button>
-                    </div>
-                    <div className="border rounded-lg overflow-hidden">
-                       <Table>
-                          <TableHeader className="bg-muted/50">
-                             <TableRow>
-                                <TableHead className="h-9 text-[10px] font-black uppercase">Item</TableHead>
-                                <TableHead className="h-9 text-[10px] font-black uppercase w-20">Qty</TableHead>
-                                <TableHead className="h-9 text-[10px] font-black uppercase w-24 text-right">Amnt</TableHead>
-                             </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                             {[1, 2].map(i => (
-                                <TableRow key={i}>
-                                   <TableCell className="py-2">
-                                      <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 placeholder:text-muted-foreground/50" placeholder="Search item..." />
-                                   </TableCell>
-                                   <TableCell className="py-2">
-                                      <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 font-mono" placeholder="0" />
-                                   </TableCell>
-                                   <TableCell className="py-2 text-right">
-                                      <span className="font-mono text-xs">$0.00</span>
-                                   </TableCell>
-                                </TableRow>
-                             ))}
-                          </TableBody>
-                       </Table>
-                    </div>
-                    <div className="flex justify-end gap-6 text-sm">
-                       <div className="text-muted-foreground font-medium">Subtotal: <span className="text-foreground">$0.00</span></div>
-                       <div className="text-muted-foreground font-medium">Tax: <span className="text-foreground">$0.00</span></div>
-                       <div className="font-black text-primary">Total: $0.00</div>
-                    </div>
-                 </div>
+                  <div className="pt-10 flex gap-4">
+                    <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsEntryOpen(false)}>Cancel</Button>
+                    <Button className="flex-1 h-12 shadow-xl shadow-blue-500/20 font-black tracking-wide bg-blue-600 text-white hover:bg-blue-700">Confirm Receipt</Button>
+                  </div>
+                </div>
               </div>
-
-              <SheetFooter className="border-t pt-6 gap-2 sm:gap-0">
-                <Button variant="outline" className="h-11" onClick={() => setIsEntryOpen(false)}>Cancel</Button>
-                <Button className="h-11 font-bold">Confirm Receipt</Button>
-              </SheetFooter>
             </SheetContent>
           </Sheet>
         </div>

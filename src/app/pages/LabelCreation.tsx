@@ -108,8 +108,8 @@ export function LabelCreation() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Print Protocol</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Tag & Price Hub</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Print Protocol</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Tag & Price Hub</h1>
           <p className="text-muted-foreground font-medium">Synchronize physical identifiers with logical price points.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -194,24 +194,24 @@ export function LabelCreation() {
                            ))}
                         </div>
 
-                        <div className="p-8 rounded-3xl bg-zinc-900 text-white flex flex-col md:flex-row items-center justify-between gap-8">
+                        <div className="p-8 rounded-3xl bg-muted/20 border border-muted/50 flex flex-col md:flex-row items-center justify-between gap-8">
                            <div className="space-y-1 text-center md:text-left">
-                              <p className="text-xs font-black uppercase tracking-widest text-white/50">New Fiscal Target</p>
-                              <p className="text-sm font-medium text-white/70 italic">Adjust points and commit to history</p>
+                              <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">New Fiscal Target</p>
+                              <p className="text-sm font-medium text-foreground">Adjust points and commit to history</p>
                            </div>
                            <div className="flex gap-4 w-full md:w-auto">
                               <div className="relative flex-1 md:w-48">
-                                 <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-black text-white/20">$</span>
+                                 <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-black text-muted-foreground">$</span>
                                  <Input 
                                    type="number"
-                                   className="h-16 pl-12 border-none bg-white/5 focus-visible:ring-white/10 text-3xl font-black text-center"
+                                   className="h-16 pl-12 border-none bg-white shadow-sm focus-visible:ring-primary/20 text-3xl font-black text-center text-foreground"
                                    value={newPrice}
                                    onChange={(e) => setNewPrice(e.target.value)}
                                  />
                               </div>
                               <Button 
                                 onClick={handleUpdatePrice} 
-                                className="h-16 px-10 bg-white text-black hover:bg-white/90 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em]"
+                                className="h-16 px-10 bg-black text-white hover:bg-black/90 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl shadow-black/10"
                               >
                                 Commit & Stream
                               </Button>
@@ -229,7 +229,7 @@ export function LabelCreation() {
                  <CardHeader className="px-8 pt-8 flex-row items-center justify-between">
                     <div className="flex items-center gap-3">
                        <History className="h-5 w-5 text-muted-foreground" />
-                       <CardTitle className="text-xl font-black italic tracking-tighter">Variance Archive</CardTitle>
+                       <CardTitle className="text-xl font-black tracking-tighter">Variance Archive</CardTitle>
                     </div>
                     <Badge variant="outline" className="bg-muted text-[10px] font-black uppercase tracking-widest pl-2">System forensic feed</Badge>
                  </CardHeader>
@@ -278,13 +278,13 @@ export function LabelCreation() {
         {/* Sidebar Context */}
         <div className="lg:col-span-4 space-y-8">
            <motion.div variants={item} className="sticky top-10">
-              <Card className="border-none shadow-2xl bg-zinc-900 text-white overflow-hidden relative">
-                 <div className="absolute top-0 right-0 p-8 opacity-10">
+              <Card className="border shadow-lg bg-background overflow-hidden relative">
+                 <div className="absolute top-0 right-0 p-8 opacity-5">
                     <Maximize2 className="h-32 w-32" />
                  </div>
                  <CardHeader className="pb-4 relative z-10 px-8 pt-8">
-                    <CardTitle className="text-xl font-black tracking-tighter italic">Tag Architect</CardTitle>
-                    <CardDescription className="text-white/40 text-[10px] font-bold uppercase tracking-widest">Real-time physical mock rendering</CardDescription>
+                    <CardTitle className="text-xl font-black tracking-tighter">Tag Architect</CardTitle>
+                    <CardDescription className="text-muted-foreground text-[10px] font-bold uppercase tracking-widest">Real-time physical mock rendering</CardDescription>
                  </CardHeader>
                  <CardContent className="px-8 pb-10 relative z-10 flex flex-col items-center justify-center min-h-[400px]">
                     <AnimatePresence mode="wait">
@@ -314,7 +314,7 @@ export function LabelCreation() {
                                 <div className="text-center">
                                    <div className="flex items-start justify-center">
                                       <span className="text-sm font-black pt-2">$</span>
-                                      <span className="text-6xl font-black italic tracking-tighter">
+                                      <span className="text-6xl font-black tracking-tighter">
                                          {newPrice ? parseFloat(newPrice).toFixed(0) : selectedItem.currentPrice.toFixed(0)}
                                       </span>
                                       <span className="text-xl font-black pt-2 opacity-30">
@@ -341,12 +341,12 @@ export function LabelCreation() {
                     </AnimatePresence>
                  </CardContent>
                  <CardFooter className="px-8 pb-8 flex flex-col gap-4 relative z-10">
-                    <Button variant="outline" className="w-full h-11 border-white/10 text-white bg-white/5 hover:bg-white/10 font-bold uppercase text-[10px] tracking-widest">
+                    <Button variant="outline" className="w-full h-11 border-muted text-muted-foreground bg-muted/20 hover:bg-muted/30 font-bold uppercase text-[10px] tracking-widest">
                        <Settings2 className="mr-2 h-3.5 w-3.5" /> Template Logic
                     </Button>
-                    <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/10">
-                       <AlertCircle className="h-4 w-4 text-amber-400" />
-                       <p className="text-[10px] font-medium text-white/60">Ensure thermal printer is initialized and calibrated for Zebra 4x6 media.</p>
+                    <div className="flex items-center gap-2 p-3 rounded-2xl bg-amber-50 border border-amber-100">
+                       <AlertCircle className="h-4 w-4 text-amber-600" />
+                       <p className="text-[10px] font-medium text-amber-800/80">Ensure thermal printer is initialized and calibrated for Zebra 4x6 media.</p>
                     </div>
                  </CardFooter>
               </Card>

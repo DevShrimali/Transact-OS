@@ -63,7 +63,7 @@ const MethodSelector = ({
       </div>
 
       <div className="space-y-2 max-h-[300px] overflow-y-auto">
-        {methods.length === 0 && <p className="text-sm text-muted-foreground italic">No methods selected</p>}
+        {methods.length === 0 && <p className="text-sm text-muted-foreground">No methods selected</p>}
         {methods.map((method) => (
           <div key={method} className="flex items-center justify-between rounded-md border bg-muted/50 p-2 pl-3">
              <span className="text-sm font-medium">{method}</span>
@@ -544,7 +544,7 @@ export function CreateCompany({ onBack, onComplete }: CreateCompanyProps) {
                         {/* Rack Level */}
                         {expandedNodes.includes(zone.id) && (
                             <div className="ml-8 space-y-3 border-l pl-4">
-                            {zone.racks.length === 0 && <p className="text-xs text-muted-foreground italic">No racks added yet.</p>}
+                            {zone.racks.length === 0 && <p className="text-xs text-muted-foreground">No racks added yet.</p>}
                             {zone.racks.map(rack => (
                                 <div key={rack.id} className="rounded-md border bg-muted/20 p-3">
                                     <div className="flex items-center justify-between">
@@ -664,7 +664,7 @@ export function CreateCompany({ onBack, onComplete }: CreateCompanyProps) {
                 </div>
                 
                 <div className="space-y-2 bg-muted/50 p-3 rounded-md border">
-                    {taxForm.subTaxes.length === 0 && <p className="text-xs text-muted-foreground italic text-center py-2">No components added. This is a flat tax.</p>}
+                    {taxForm.subTaxes.length === 0 && <p className="text-xs text-muted-foreground text-center py-2">No components added. This is a flat tax.</p>}
                     {taxForm.subTaxes.map((sub, index) => (
                         <div key={index} className="flex gap-2 items-center">
                             <Input 
@@ -798,14 +798,14 @@ export function CreateCompany({ onBack, onComplete }: CreateCompanyProps) {
                 <span className="block text-xs font-semibold uppercase text-muted-foreground mb-1">Stock In</span>
                 <div className="flex flex-wrap gap-1">
                   {formData.stockIn.map(m => <span key={m} className="inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-medium bg-muted">{m}</span>)}
-                  {formData.stockIn.length === 0 && <span className="text-xs italic text-muted-foreground">None selected</span>}
+                  {formData.stockIn.length === 0 && <span className="text-xs text-muted-foreground">None selected</span>}
                 </div>
               </div>
               <div>
                 <span className="block text-xs font-semibold uppercase text-muted-foreground mb-1">Stock Out</span>
                  <div className="flex flex-wrap gap-1">
                   {formData.stockOut.map(m => <span key={m} className="inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-medium bg-muted">{m}</span>)}
-                  {formData.stockOut.length === 0 && <span className="text-xs italic text-muted-foreground">None selected</span>}
+                  {formData.stockOut.length === 0 && <span className="text-xs text-muted-foreground">None selected</span>}
                 </div>
               </div>
             </CardContent>

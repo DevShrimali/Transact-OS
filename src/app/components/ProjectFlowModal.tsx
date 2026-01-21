@@ -9,7 +9,13 @@ import {
 } from '@/app/components/ui/dialog';
 import { Info, ArrowDown } from 'lucide-react';
 
+import { inventoryStats, mockUsers, initialWarehouseData, mockDiscounts } from '@/app/data/mockSystemData';
+
 export function ProjectFlowModal() {
+  const activeCampaigns = mockDiscounts.filter(d => d.status === 'active').length;
+  const warehouseCount = initialWarehouseData.length;
+  const activeUsers = mockUsers.filter(u => u.status === 'active').length;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -99,9 +105,9 @@ export function ProjectFlowModal() {
                    </div>
                    
                    <div className="w-full bg-muted/30 rounded-lg p-4 border border-border flex flex-col gap-3">
-                     <ModuleNode label="Item Master (SKU, Price)" />
+                     <ModuleNode label={`Item Master (${inventoryStats.totalSkus} SKUs)`} />
                      <ModuleNode label="Duplication Check" />
-                     <ModuleNode label="Warehouse Model (Storage)" />
+                     <ModuleNode label={`Warehouse Model (${warehouseCount} Facilities)`} />
                      <div className="h-px bg-border w-full my-1"></div>
                      <ModuleNode label="Inward Entry (Invoice)" />
                      <ModuleNode label="Putaway (Bin Allocation)" />
@@ -120,6 +126,7 @@ export function ProjectFlowModal() {
                    {/* Linear Process Flow */}
                    <div className="w-full bg-muted/30 rounded-lg p-4 border border-border flex flex-col gap-0">
                      <ProcessStep label="POS Start" isFirst />
+                     <ProcessStep label={`Active Campaigns: ${activeCampaigns}`} />
                      <ProcessStep label="Item Search & Stock Check" />
                      <ProcessStep label="Add to Cart" />
                      <ProcessStep label="Discount & Tax Calc" />
@@ -144,7 +151,7 @@ export function ProjectFlowModal() {
                    <div className="w-full bg-muted/30 rounded-lg p-4 border border-border flex flex-col gap-3">
                      <ModuleNode label="Tax Config & Rules" />
                      <ModuleNode label="Vendor Master" />
-                     <ModuleNode label="Staff / User Management" />
+                     <ModuleNode label={`Staff Mgmt (${activeUsers} Active)`} />
                      <div className="h-px bg-border w-full my-1"></div>
                      <ModuleNode label="Sales Reports" />
                      <ModuleNode label="Audit Logs" />

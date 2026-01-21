@@ -424,7 +424,7 @@ export function POS() {
       >
         <div className="space-y-1">
           <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Active Session</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic flex items-center gap-3">
+          <h1 className="text-4xl font-black tracking-tighter flex items-center gap-3">
              <Zap className="h-8 w-8 text-primary fill-primary" /> Transact <span className="text-muted-foreground/30 font-light not-italic">OS</span>
           </h1>
         </div>
@@ -500,7 +500,7 @@ export function POS() {
                       </div>
                       <div>
                          <h3 className="text-xl font-black tracking-tighter uppercase">{action.label}</h3>
-                         <p className="text-muted-foreground text-[10px] font-black tracking-widest mt-1 uppercase italic">{action.desc}</p>
+                         <p className="text-muted-foreground text-[10px] font-black tracking-widest mt-1 uppercase">{action.desc}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -515,7 +515,7 @@ export function POS() {
                          <History className="h-5 w-5" />
                       </div>
                       <div>
-                        <CardTitle className="text-2xl font-black italic tracking-tighter">Diurnal Archive</CardTitle>
+                        <CardTitle className="text-2xl font-black tracking-tighter">Diurnal Archive</CardTitle>
                         <CardDescription className="font-bold text-xs uppercase tracking-widest opacity-50">surveillance of active fiscal nodes</CardDescription>
                       </div>
                    </div>
@@ -549,7 +549,7 @@ export function POS() {
                             <td className="px-4 py-5">
                                <div className="flex flex-col">
                                   <span className="text-xs">{sale.time}</span>
-                                  <span className="text-[10px] font-medium opacity-30 italic">{sale.date}</span>
+                                  <span className="text-[10px] font-medium opacity-30">{sale.date}</span>
                                </div>
                             </td>
                             <td className="px-4 py-5">
@@ -596,7 +596,7 @@ export function POS() {
               <div className="col-span-12 lg:col-span-7 space-y-8">
                 <Card className="border-none shadow-sm overflow-hidden bg-background">
                   <CardHeader className="p-8 pb-4">
-                    <CardTitle className="text-2xl font-black italic tracking-tighter">Entity Selection</CardTitle>
+                    <CardTitle className="text-2xl font-black tracking-tighter">Entity Selection</CardTitle>
                     <div className="flex gap-3 mt-4">
                       <div className="relative flex-1 group">
                         <Scan className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/30 transition-colors group-focus-within:text-primary" />
@@ -636,7 +636,7 @@ export function POS() {
                             <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest">SKU: 0x{i}F92B</p>
                             <div className="pt-2 flex items-center justify-between">
                                <span className="text-lg font-black text-primary">$12.50</span>
-                               <span className="text-[9px] font-black uppercase tracking-widest opacity-20 italic">v2.44</span>
+                               <span className="text-[9px] font-black uppercase tracking-widest opacity-20">v2.44</span>
                             </div>
                           </div>
                         </motion.button>
@@ -651,7 +651,7 @@ export function POS() {
                 <Card className="flex-1 flex flex-col border-none shadow-2xl overflow-hidden bg-background relative">
                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary/50 to-primary" />
                    <CardHeader className="p-8 pb-4">
-                    <CardTitle className="flex justify-between items-center text-xl font-black italic tracking-tighter uppercase italic">
+                    <CardTitle className="flex justify-between items-center text-xl font-black tracking-tighter uppercase">
                       <span>Order Calculus</span>
                       <Badge variant="outline" className="border-primary/20 text-primary font-black uppercase text-[10px] tracking-widest bg-primary/5 px-3">
                         Terminal Node #A44
@@ -705,7 +705,7 @@ export function POS() {
                       {cart.length === 0 && (
                          <div className="h-full flex flex-col items-center justify-center text-center opacity-20 py-20 pointer-events-none">
                             <ShoppingCart className="h-20 w-20 mb-4" />
-                            <p className="font-black uppercase tracking-widest text-sm italic">Logical Cart Emptied</p>
+                            <p className="font-black uppercase tracking-widest text-sm">Logical Cart Emptied</p>
                          </div>
                       )}
                     </div>
@@ -721,7 +721,7 @@ export function POS() {
                         <span>${taxTotal.toFixed(2)}</span>
                       </div>
                       <Separator className="bg-slate-200" />
-                      <div className="flex justify-between font-black text-3xl italic tracking-tighter items-end">
+                      <div className="flex justify-between font-black text-3xl tracking-tighter items-end">
                         <span className="text-[10px] not-italic font-black uppercase tracking-[0.2em] mb-2 text-primary opacity-40">Grand Total</span>
                         <div className="flex items-start">
                            <span className="text-sm pt-1">$</span>
@@ -758,7 +758,7 @@ export function POS() {
                   <div className="space-y-8">
                      <div className="space-y-2">
                         <Badge variant="outline" className="text-[10px] font-black tracking-widest uppercase opacity-40">Escrow Configuration</Badge>
-                        <h2 className="text-3xl font-black italic tracking-tighter uppercase leading-none">Settlement <br/>Protocol</h2>
+                        <h2 className="text-3xl font-black tracking-tighter uppercase leading-none">Settlement <br/>Protocol</h2>
                      </div>
 
                      <div className="space-y-4">
@@ -795,7 +795,7 @@ export function POS() {
                   <div className="pt-10 flex gap-4">
                      <div className="flex-1 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
                         <div className="text-[10px] font-black uppercase opacity-30 tracking-widest mb-1">Total Valuation</div>
-                        <div className="text-2xl font-black italic tracking-tighter">${total.toFixed(2)}</div>
+                        <div className="text-2xl font-black tracking-tighter">${total.toFixed(2)}</div>
                      </div>
                      <Button variant="ghost" size="icon" className="h-16 w-16 rounded-2xl bg-white border border-slate-100" onClick={() => setStep("cart")}>
                         <ArrowLeft className="h-6 w-6" />
@@ -856,7 +856,7 @@ export function POS() {
                            <div className="space-y-2">
                               {paymentMethods.map((pm, idx) => (
                                  <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 font-bold group">
-                                    <div className="flex items-center gap-3 italic">
+                                    <div className="flex items-center gap-3">
                                        <Badge variant="outline" className="bg-white text-[9px] uppercase tracking-tighter px-2">{pm.type}</Badge>
                                        <span className="text-sm">Settlement Node_{idx + 1}</span>
                                     </div>
@@ -934,7 +934,7 @@ export function POS() {
                                      onChange={(e) => setPartialCreditAmount(e.target.value)}
                                   />
                                </div>
-                               <p className="text-[10px] font-black uppercase tracking-widest opacity-30 text-center italic">Remaining ${(total - (parseFloat(partialCreditAmount) || 0)).toFixed(2)} will be deferred to credit</p>
+                               <p className="text-[10px] font-black uppercase tracking-widest opacity-30 text-center">Remaining ${(total - (parseFloat(partialCreditAmount) || 0)).toFixed(2)} will be deferred to credit</p>
                             </motion.div>
                          )}
 
@@ -972,7 +972,7 @@ export function POS() {
              <Card className="border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden bg-white pt-16">
                 <CardHeader className="text-center p-8">
                    <Badge variant="outline" className="text-[10px] font-black tracking-[0.3em] mb-4 border-emerald-200 text-emerald-600 bg-emerald-50">Transaction Sealed</Badge>
-                   <CardTitle className="text-4xl font-black italic tracking-tighter italic uppercase leading-none mb-2">Ref_Txn #1004A</CardTitle>
+                   <CardTitle className="text-4xl font-black tracking-tighter uppercase leading-none mb-2">Ref_Txn #1004A</CardTitle>
                    <CardDescription className="text-[10px] font-black uppercase tracking-widest">System Timestamp: {new Date().toLocaleTimeString()} :: {new Date().toLocaleDateString()}</CardDescription>
                 </CardHeader>
                 
@@ -982,7 +982,7 @@ export function POS() {
                       <div className="flex justify-between items-end relative z-10">
                          <div className="space-y-1">
                             <div className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Settled Valuation</div>
-                            <div className="text-4xl font-black italic tracking-tighter flex items-start">
+                            <div className="text-4xl font-black tracking-tighter flex items-start">
                                <span className="text-lg pt-1 mr-1">$</span>
                                <span>{total.toFixed(2)}</span>
                             </div>
@@ -994,7 +994,7 @@ export function POS() {
                    </div>
 
                    <div className="space-y-4">
-                      <div className="flex justify-between text-xs font-black uppercase tracking-widest opacity-30 italic">
+                      <div className="flex justify-between text-xs font-black uppercase tracking-widest opacity-30">
                          <span>Network Confirmation</span>
                          <span>0x_VERIFIED</span>
                       </div>
@@ -1232,7 +1232,7 @@ export function POS() {
                       )}
                       {selectedCustomer.recentTransactions
                         .length === 0 && (
-                        <div className="text-sm text-neutral-400 italic">
+                        <div className="text-sm text-neutral-400">
                           No recent history
                         </div>
                       )}

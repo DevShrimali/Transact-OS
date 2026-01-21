@@ -58,7 +58,7 @@ export function Profile() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
           <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Identity Management</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Personal Matrix</h1>
+          <h1 className="text-4xl font-black tracking-tighter">Personal Matrix</h1>
           <p className="text-muted-foreground font-medium">Synchronize your profile architecture and security protocols.</p>
         </div>
         <div className="flex items-center gap-3">

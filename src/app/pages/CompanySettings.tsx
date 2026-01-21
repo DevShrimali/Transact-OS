@@ -62,8 +62,8 @@ export function CompanySettings() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Organization Protocol</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Entity Master</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Organization Protocol</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Entity Master</h1>
           <p className="text-muted-foreground font-medium">Define the core characteristics and operational jurisdiction of your enterprise.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -184,23 +184,23 @@ export function CompanySettings() {
         {/* Sidebar Context */}
         <div className="lg:col-span-4 space-y-8">
            <motion.div variants={item}>
-              <Card className="border-none shadow-2xl bg-zinc-900 text-white overflow-hidden relative">
-                 <div className="absolute -bottom-10 -right-10 opacity-10">
+              <Card className="border shadow-lg bg-background overflow-hidden relative">
+                 <div className="absolute -bottom-10 -right-10 opacity-5">
                     <ShieldCheck className="w-64 h-64" />
                  </div>
                  <CardHeader className="pb-4 relative z-10">
-                    <div className="h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center text-primary mb-2">
-                       <Layers className="h-5 w-5 text-emerald-400" />
+                    <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center text-primary mb-2 border border-emerald-100">
+                       <Layers className="h-5 w-5 text-emerald-600" />
                     </div>
                     <CardTitle className="text-xl font-black">Entity Status</CardTitle>
                  </CardHeader>
                  <CardContent className="space-y-6 relative z-10">
-                    <div className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10">
+                    <div className="flex items-center justify-between p-4 rounded-2xl bg-muted/30 border border-muted/50">
                        <div className="flex flex-col">
-                          <span className="text-[10px] uppercase font-black opacity-50">Operational Hub</span>
+                          <span className="text-[10px] uppercase font-black opacity-50 text-muted-foreground">Operational Hub</span>
                           <span className="text-sm font-bold">North America - West</span>
                        </div>
-                       <div className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] animate-pulse" />
+                       <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse" />
                     </div>
                     <div className="space-y-4">
                        <div className="flex items-center gap-4 text-sm font-medium">
@@ -212,8 +212,8 @@ export function CompanySettings() {
                           <span>Linked Warehouses: 04</span>
                        </div>
                     </div>
-                    <Separator className="bg-white/10" />
-                    <Button variant="ghost" className="w-full text-white/70 hover:text-white hover:bg-white/10 font-bold gap-2">
+                    <Separator className="bg-border" />
+                    <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground hover:bg-muted font-bold gap-2">
                        <ExternalLink className="h-4 w-4" /> View Legal Manifest
                     </Button>
                  </CardContent>

@@ -15,8 +15,6 @@ import {
   UserMinus,
   ShieldAlert,
   Fingerprint,
-  ChevronRight,
-  MoreHorizontal,
   Key,
   Briefcase,
   History,
@@ -26,9 +24,6 @@ import {
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription
 } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -60,6 +55,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
 import { motion } from "framer-motion";
 import { cn } from "@/app/components/ui/utils";
+import { mockUsers } from "@/app/data/mockSystemData";
 
 interface User {
   id: string;
@@ -92,12 +88,7 @@ export function UserManagement() {
   const [searchQuery, setSearchQuery] = useState("");
   
   // Mock Data
-  const [users, setUsers] = useState<User[]>([
-    { id: "1", name: "John Doe", email: "john@company.com", role: "Warehouse Manager", department: "Operations", status: "active", lastActive: "2 mins ago" },
-    { id: "2", name: "Jane Smith", email: "jane@company.com", role: "Accountant", department: "Finance", status: "active", lastActive: "1 hour ago" },
-    { id: "3", name: "Mike Johnson", email: "mike@company.com", role: "Picker", department: "Logistics", status: "inactive", lastActive: "2 days ago" },
-    { id: "4", name: "Sarah Wilson", email: "sarah@company.com", role: "Admin", department: "IT", status: "active", lastActive: "Just now" },
-  ]);
+  const [users] = useState<User[]>(mockUsers);
 
   const stats = [
     { title: "Total Crew", value: "32", sub: "+3 new this month", icon: Users, color: "text-blue-600", bg: "bg-blue-50/50" },
@@ -116,8 +107,8 @@ export function UserManagement() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Workspace Security</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Personnel Directory</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Workspace Security</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Personnel Directory</h1>
           <p className="text-muted-foreground font-medium">Manage user identity, access vectors, and functional permissions.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -140,7 +131,7 @@ export function UserManagement() {
                      <div className={cn("p-3 rounded-2xl transition-transform group-hover:scale-110", stat.bg, stat.color)}>
                         <stat.icon className="h-5 w-5" />
                      </div>
-                     <Badge variant="ghost" className="text-[10px] font-bold opacity-50 px-0">METRIC_00{idx+1}</Badge>
+                     <Badge variant="outline" className="text-[10px] font-bold opacity-50 px-0">METRIC_00{idx+1}</Badge>
                   </div>
                   <div>
                     <h3 className="text-3xl font-black tracking-tight">{stat.value}</h3>
@@ -306,7 +297,6 @@ export function UserManagement() {
           </div>
         </Card>
       </motion.div>
-
       {/* Staff Provisioning (Sheet) */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">

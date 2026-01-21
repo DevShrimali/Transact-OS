@@ -2,32 +2,23 @@ import React, { useState } from "react";
 import {
   Search,
   Plus,
-  Edit,
   Trash2,
   Filter,
-  X,
   Calendar,
   Percent,
   DollarSign,
-  Tag,
-  Package,
-  Users,
-  Grid3x3,
-  ChevronDown,
-  ChevronUp,
   MoreVertical,
-  ArrowRight,
-  TrendingDown,
-  CalendarDays,
   Sparkles,
-  Download
+  ChevronDown,
+  Edit,
+  Users,
+  Download,
+  ChevronUp,
+  ArrowRight
 } from "lucide-react";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription
 } from "@/app/components/ui/card";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
@@ -47,8 +38,6 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetFooter,
-  SheetTrigger
 } from "@/app/components/ui/sheet";
 import {
   Select,
@@ -68,87 +57,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/app/components/ui/utils";
 
-interface Discount {
-  id: string;
-  name: string;
-  type: "category" | "product" | "vendor" | "custom-group";
-  discountType: "percentage" | "fixed";
-  value: number;
-  appliedTo: string[];
-  startDate: string;
-  endDate: string;
-  status: "active" | "inactive" | "expired";
-  minPurchaseAmount?: number;
-  maxDiscountAmount?: number;
-  priority: number;
-}
-
-const mockDiscounts: Discount[] = [
-  {
-    id: "D001",
-    name: "Winter Electronics Extravaganza",
-    type: "category",
-    discountType: "percentage",
-    value: 15,
-    appliedTo: ["Electronics", "Computers"],
-    startDate: "2026-01-15",
-    endDate: "2026-02-15",
-    status: "active",
-    minPurchaseAmount: 100,
-    maxDiscountAmount: 500,
-    priority: 1,
-  },
-  {
-    id: "D002",
-    name: "New Year Tech Clearance",
-    type: "product",
-    discountType: "fixed",
-    value: 50,
-    appliedTo: ["Laptop Model X", "Laptop Model Y"],
-    startDate: "2026-01-10",
-    endDate: "2026-03-10",
-    status: "active",
-    priority: 2,
-  },
-  {
-    id: "D003",
-    name: "Preferred Partner Promotion",
-    type: "vendor",
-    discountType: "percentage",
-    value: 10,
-    appliedTo: ["TechCorp Suppliers", "Global Tech Inc."],
-    startDate: "2026-01-01",
-    endDate: "2026-12-31",
-    status: "active",
-    priority: 3,
-  },
-  {
-    id: "D004",
-    name: "Flash Holiday Markdown",
-    type: "custom-group",
-    discountType: "percentage",
-    value: 25,
-    appliedTo: ["Summer Items", "Seasonal Stock"],
-    startDate: "2025-12-01",
-    endDate: "2026-01-15",
-    status: "expired",
-    maxDiscountAmount: 200,
-    priority: 4,
-  },
-  {
-    id: "D005",
-    name: "Home Office Refresh Event",
-    type: "category",
-    discountType: "percentage",
-    value: 20,
-    appliedTo: ["Furniture", "Home Decor"],
-    startDate: "2026-02-01",
-    endDate: "2026-03-01",
-    status: "inactive",
-    minPurchaseAmount: 200,
-    priority: 5,
-  },
-];
+import { mockDiscounts, discountStats, Discount as DiscountModel } from '@/app/data/mockSystemData';
 
 const mockCategories = ["Electronics", "Computers", "Furniture", "Home Decor", "Clothing", "Sports"];
 const mockProducts = ["Laptop Model X", "Laptop Model Y", "Desktop PC", "Monitor 24\"", "Wireless Mouse"];
@@ -175,11 +84,11 @@ export function Discount() {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>(null);
+  const [selectedDiscount, setSelectedDiscount] = useState<DiscountModel | null>(null);
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
   // Form states
-  const [formData, setFormData] = useState<Partial<Discount>>({
+  const [formData, setFormData] = useState<Partial<DiscountModel>>({
     name: "",
     type: "category",
     discountType: "percentage",
@@ -214,14 +123,14 @@ export function Discount() {
     setIsSheetOpen(true);
   };
 
-  const handleEditDiscount = (discount: Discount) => {
+  const handleEditDiscount = (discount: DiscountModel) => {
     setSelectedDiscount(discount);
     setFormData(discount);
     setSelectedItems(discount.appliedTo);
     setIsSheetOpen(true);
   };
 
-  const handleDeleteDiscount = (discount: Discount) => {
+  const handleDeleteDiscount = (discount: DiscountModel) => {
     setSelectedDiscount(discount);
     setShowDeleteModal(true);
   };
@@ -278,12 +187,7 @@ export function Discount() {
     return matchesSearch && matchesType && matchesStatus;
   });
 
-  const stats = [
-    { title: "Active Campaigns", value: "3", icon: Sparkles, color: "text-emerald-600", bg: "bg-emerald-100" },
-    { title: "Total Savings", value: "$12,450", icon: TrendingDown, color: "text-blue-600", bg: "bg-blue-100" },
-    { title: "Scheduled", value: "2", icon: CalendarDays, color: "text-purple-600", bg: "bg-purple-100" },
-    { title: "Avg Discount", value: "15%", icon: Percent, color: "text-amber-600", bg: "bg-amber-100" },
-  ];
+  const stats = discountStats;
 
   return (
     <motion.div 
@@ -293,17 +197,18 @@ export function Discount() {
       className="max-w-[1600px] mx-auto space-y-8 pb-10"
     >
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Campaigns & Discounts</h1>
-          <p className="text-muted-foreground">Strategize and manage tiered pricing and promotional rules.</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+        <div className="space-y-1">
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Pricing Strategy</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Promotions Engine</h1>
+          <p className="text-muted-foreground font-medium">Strategize and manage tiered pricing and promotional rules.</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="hidden sm:flex">
-            <Download className="mr-2 h-4 w-4" /> Reports
+        <div className="flex items-center gap-3">
+          <Button variant="outline" className="h-12 px-6 border-muted bg-background shadow-sm gap-2 font-bold">
+            <Download className="h-4 w-4" /> Export Report
           </Button>
-          <Button size="lg" className="shadow-lg gap-2" onClick={handleAddDiscount}>
-            <Plus className="h-5 w-5" /> Start Campaign
+          <Button onClick={handleAddDiscount} className="h-12 px-8 gap-2 shadow-xl shadow-primary/25 font-black uppercase text-xs tracking-widest">
+            <Plus className="h-4 w-4" /> New Campaign
           </Button>
         </div>
       </div>
@@ -550,187 +455,222 @@ export function Discount() {
 
       {/* Campaign Config Sheet */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent className="sm:max-w-2xl overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle className="text-2xl">{selectedDiscount ? "Refine Campaign" : "Manifest New Campaign"}</SheetTitle>
-            <SheetDescription>
-              Architect the parameters of your promotional campaign. Defined rules propagate globally across matching transactions.
-            </SheetDescription>
-          </SheetHeader>
-          <div className="space-y-8 py-8">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Campaign Identity</Label>
-                <Input
-                  value={formData.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="The Ultimate Tech Blast 2026"
-                  className="font-semibold text-lg h-12"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Asset Type</Label>
-                  <Select
-                    value={formData.type}
-                    onValueChange={(value: string) => setFormData({ ...formData, type: value as any })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="category">Product Categories</SelectItem>
-                      <SelectItem value="product">Specific Stock Items</SelectItem>
-                      <SelectItem value="vendor">Wholesale Partners</SelectItem>
-                      <SelectItem value="custom-group">Strategic Groups</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                   <Label>Campaign Status</Label>
-                   <Select
-                    value={formData.status}
-                    onValueChange={(value: string) => setFormData({ ...formData, status: value as any })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="active">Active Now</SelectItem>
-                      <SelectItem value="inactive">Paused / Draft</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4 pt-6 border-t">
-               <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Value Engineering</Label>
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>Calculative Model</Label>
-                    <Select
-                      value={formData.discountType}
-                      onValueChange={(value: string) => setFormData({ ...formData, discountType: value as any })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="percentage">Percentage Allocation (%)</SelectItem>
-                        <SelectItem value="fixed">Fixed Currency Offset ($)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Magnitude</Label>
-                    <div className="relative">
-                       <Input
-                        type="number"
-                        value={formData.value}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, value: parseFloat(e.target.value) })}
-                        className="pr-10 font-bold"
-                      />
-                      <div className="absolute right-3 top-2.5 text-muted-foreground">
-                         {formData.discountType === "percentage" ? <Percent className="h-4 w-4" /> : <DollarSign className="h-4 w-4" />}
+        <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">
+          <div className="px-10 pb-32 pt-10">
+             <SheetHeader className="mb-12">
+               <div className="h-14 w-14 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600 mb-6 shadow-inner border border-amber-500/20">
+                  <Sparkles className="h-7 w-7" />
+               </div>
+               <SheetTitle className="text-3xl font-black tracking-tight">{selectedDiscount ? "Refine Campaign" : "Manifest New Campaign"}</SheetTitle>
+               <SheetDescription className="text-base font-medium">
+                  Architect the parameters of your promotional campaign. Defined rules propagate globally across matching transactions.
+               </SheetDescription>
+             </SheetHeader>
+             
+             <div className="space-y-12">
+                {/* Identity Section */}
+                <section className="space-y-6">
+                   <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-amber-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Campaign Identity</h3>
+                   </div>
+                   <div className="space-y-6">
+                      <div className="space-y-2.5">
+                         <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Campaign Moniker</Label>
+                         <Input
+                           value={formData.name}
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
+                           placeholder="The Ultimate Tech Blast 2026"
+                           className="h-12 border-none bg-muted/50 focus-visible:ring-amber-500/20 font-bold"
+                         />
                       </div>
-                    </div>
-                  </div>
-               </div>
-               <div className="grid grid-cols-2 gap-4 pt-2">
-                  <div className="space-y-2">
-                    <Label>Lower Threshold (Min Buy)</Label>
-                    <Input
-                      type="number"
-                      value={formData.minPurchaseAmount || ""}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, minPurchaseAmount: e.target.value ? parseFloat(e.target.value) : undefined })}
-                      placeholder="No minimum"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Upper Boundary (Max Save)</Label>
-                    <Input
-                      type="number"
-                      value={formData.maxDiscountAmount || ""}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, maxDiscountAmount: e.target.value ? parseFloat(e.target.value) : undefined })}
-                      placeholder="Capped amount"
-                    />
-                  </div>
-               </div>
-            </div>
-
-            <div className="space-y-4 pt-6 border-t">
-               <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Temporal Limits</Label>
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>Activation Window</Label>
-                    <Input
-                      type="date"
-                      value={formData.startDate}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, startDate: e.target.value })}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Termination Window</Label>
-                    <Input
-                      type="date"
-                      value={formData.endDate}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, endDate: e.target.value })}
-                    />
-                  </div>
-               </div>
-            </div>
-
-            <div className="space-y-4 pt-6 border-t pb-24">
-               <div className="flex items-center justify-between">
-                  <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Asset Targeting</Label>
-                  <span className="text-[10px] bg-primary text-primary-foreground px-2 py-0.5 rounded-full font-bold">
-                    {selectedItems.length} Targets Selected
-                  </span>
-               </div>
-               <div className="border border-muted rounded-xl p-2 max-h-56 overflow-y-auto bg-muted/20">
-                  <div className="grid grid-cols-1 gap-1">
-                    {getAppliedToOptions().map((item) => (
-                      <label
-                        key={item}
-                        className={cn(
-                          "flex items-center gap-3 cursor-pointer p-3 rounded-lg transition-colors border-2 border-transparent",
-                          selectedItems.includes(item) ? "bg-background border-primary/20 shadow-sm" : "hover:bg-muted/50"
-                        )}
-                      >
-                        <div className={cn(
-                          "h-5 w-5 rounded border-2 flex items-center justify-center transition-colors",
-                          selectedItems.includes(item) ? "bg-primary border-primary" : "border-muted-foreground/30 bg-background"
-                        )}>
-                           <AnimatePresence>
-                             {selectedItems.includes(item) && (
-                               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
-                                 <Plus className="h-3.5 w-3.5 text-white rotate-45" />
-                               </motion.div>
-                             )}
-                           </AnimatePresence>
-                        </div>
-                        <input
-                          type="checkbox"
-                          checked={selectedItems.includes(item)}
-                          onChange={() => toggleItemSelection(item)}
-                          className="hidden"
+                      <div className="grid grid-cols-2 gap-6">
+                         <div className="space-y-2.5">
+                           <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Target Asset Type</Label>
+                           <Select
+                             value={formData.type}
+                             onValueChange={(value: string) => setFormData({ ...formData, type: value as any })}
+                           >
+                             <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-amber-500/20">
+                               <SelectValue />
+                             </SelectTrigger>
+                             <SelectContent>
+                               <SelectItem value="category" className="font-bold">Product Categories</SelectItem>
+                               <SelectItem value="product" className="font-bold">Specific Stock Items</SelectItem>
+                               <SelectItem value="vendor" className="font-bold">Wholesale Partners</SelectItem>
+                               <SelectItem value="custom-group" className="font-bold">Strategic Groups</SelectItem>
+                             </SelectContent>
+                           </Select>
+                         </div>
+                         <div className="space-y-2.5">
+                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Live Status</Label>
+                            <Select
+                             value={formData.status}
+                             onValueChange={(value: string) => setFormData({ ...formData, status: value as any })}
+                           >
+                             <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-amber-500/20">
+                               <SelectValue />
+                             </SelectTrigger>
+                             <SelectContent>
+                               <SelectItem value="active" className="text-emerald-600 font-bold">Active Now</SelectItem>
+                               <SelectItem value="inactive" className="text-muted-foreground font-bold">Dormant</SelectItem>
+                               <SelectItem value="expired" className="text-rose-600 font-bold">Concluded</SelectItem>
+                             </SelectContent>
+                           </Select>
+                         </div>
+                      </div>
+                   </div>
+                </section>
+                
+                {/* Value Matrix */}
+                <section className="space-y-6">
+                   <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-amber-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Value Matrix</h3>
+                   </div>
+                   <div className="grid grid-cols-3 gap-6">
+                      <div className="space-y-2.5">
+                         <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Logic Type</Label>
+                         <Select
+                           value={formData.discountType}
+                           onValueChange={(value: string) => setFormData({ ...formData, discountType: value as any })}
+                         >
+                           <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-amber-500/20">
+                             <SelectValue />
+                           </SelectTrigger>
+                           <SelectContent>
+                             <SelectItem value="percentage" className="font-bold">Percentage (%)</SelectItem>
+                             <SelectItem value="fixed" className="font-bold">Fixed Amount ($)</SelectItem>
+                           </SelectContent>
+                         </Select>
+                      </div>
+                      <div className="space-y-2.5 col-span-2">
+                         <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Discount Magnitude</Label>
+                         <div className="relative">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg bg-background flex items-center justify-center shadow-sm">
+                               {formData.discountType === 'percentage' ? <Percent className="h-4 w-4 text-primary" /> : <DollarSign className="h-4 w-4 text-primary" />}
+                            </div>
+                            <Input
+                              type="number"
+                              value={formData.value}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, value: parseFloat(e.target.value) || 0 })}
+                              className="h-12 pl-16 border-none bg-muted/50 focus-visible:ring-amber-500/20 text-lg font-black"
+                            />
+                         </div>
+                      </div>
+                   </div>
+                      
+                   <div className="grid grid-cols-2 gap-6 pt-2">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Min Threshold</Label>
+                        <Input
+                          type="number"
+                          value={formData.minPurchaseAmount || ""}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, minPurchaseAmount: e.target.value ? parseFloat(e.target.value) : undefined })}
+                          placeholder="No minimum"
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-amber-500/20 font-bold"
                         />
-                        <span className={cn("text-sm font-medium", selectedItems.includes(item) ? "text-primary" : "text-muted-foreground")}>
-                          {item}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-               </div>
-            </div>
+                      </div>
+                      <div className="space-y-2.5">
+                         <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Max Cap</Label>
+                         <Input
+                           type="number"
+                           value={formData.maxDiscountAmount || ""}
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, maxDiscountAmount: e.target.value ? parseFloat(e.target.value) : undefined })}
+                           placeholder="No limit"
+                           className="h-12 border-none bg-muted/50 focus-visible:ring-amber-500/20 font-bold"
+                         />
+                      </div>
+                   </div>
+                </section>
+
+                {/* Temporal Limits */}
+                <section className="space-y-6">
+                   <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-amber-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Temporal Limits</h3>
+                   </div>
+                   <div className="grid grid-cols-2 gap-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Activation Window</Label>
+                        <Input
+                          type="date"
+                          value={formData.startDate}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, startDate: e.target.value })}
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-amber-500/20 font-bold"
+                        />
+                      </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Termination Window</Label>
+                        <Input
+                          type="date"
+                          value={formData.endDate}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, endDate: e.target.value })}
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-amber-500/20 font-bold"
+                        />
+                      </div>
+                   </div>
+                </section>
+
+                {/* Asset Targeting */}
+                <section className="space-y-6">
+                   <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-amber-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Asset Targeting</h3>
+                   </div>
+                   <div className="space-y-4">
+                       <div className="flex items-center justify-between">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Selected Targets</Label>
+                          <Badge className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-2.5">
+                            {selectedItems.length} Active
+                          </Badge>
+                       </div>
+                       <div className="border border-none bg-muted/30 rounded-2xl p-2 max-h-56 overflow-y-auto">
+                          <div className="grid grid-cols-1 gap-1">
+                            {getAppliedToOptions().map((item) => (
+                              <label
+                                key={item}
+                                className={cn(
+                                  "flex items-center gap-3 cursor-pointer p-3 rounded-xl transition-all border-2 border-transparent",
+                                  selectedItems.includes(item) ? "bg-background border-amber-500/20 shadow-sm" : "hover:bg-muted/50"
+                                )}
+                              >
+                                <div className={cn(
+                                  "h-5 w-5 rounded-lg border-2 flex items-center justify-center transition-colors",
+                                  selectedItems.includes(item) ? "bg-amber-500 border-amber-500" : "border-muted-foreground/30 bg-background"
+                                )}>
+                                   <AnimatePresence>
+                                     {selectedItems.includes(item) && (
+                                       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
+                                         <Plus className="h-3.5 w-3.5 text-white stroke-[3px]" />
+                                       </motion.div>
+                                     )}
+                                   </AnimatePresence>
+                                </div>
+                                <input
+                                  type="checkbox"
+                                  checked={selectedItems.includes(item)}
+                                  onChange={() => toggleItemSelection(item)}
+                                  className="hidden"
+                                />
+                                <span className={cn("text-sm font-bold", selectedItems.includes(item) ? "text-amber-700" : "text-muted-foreground")}>
+                                  {item}
+                                </span>
+                              </label>
+                            ))}
+                          </div>
+                       </div>
+                   </div>
+                </section>
+
+                <div className="pt-10 flex gap-4">
+                     <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsSheetOpen(false)}>Discard</Button>
+                     <Button className="flex-1 h-12 shadow-xl shadow-amber-500/20 font-black tracking-wide bg-amber-500 hover:bg-amber-600 text-white border-none" onClick={handleSaveDiscount}>
+                        {selectedDiscount ? "Update Campaign" : "Launch Campaign"}
+                     </Button>
+                </div>
+             </div>
           </div>
-          <SheetFooter className="absolute bottom-0 left-0 right-0 p-6 bg-background border-t">
-            <Button variant="outline" className="flex-1" onClick={() => setIsSheetOpen(false)}>Discard Draft</Button>
-            <Button className="flex-1 shadow-lg shadow-primary/20" onClick={handleSaveDiscount}>
-               {selectedDiscount ? "Synchronize Updates" : "Deploy Campaign"}
-            </Button>
-          </SheetFooter>
         </SheetContent>
       </Sheet>
 

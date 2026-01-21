@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Download,
   Calendar,
@@ -53,7 +53,7 @@ export function Reports() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
           <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Intelligence Suite</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic text-gray-900">Strategic Insights</h1>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Strategic Insights</h1>
           <p className="text-muted-foreground font-medium">Decipher organizational performance through high-fidelity data extraction.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -164,7 +164,7 @@ function SalesReport() {
 
          <Card className="lg:col-span-4 border-none shadow-sm flex flex-col justify-between overflow-hidden">
             <CardHeader className="px-8 pt-8">
-               <CardTitle className="text-xl font-bold italic tracking-tighter">High Yield Catalog</CardTitle>
+               <CardTitle className="text-xl font-bold tracking-tighter">High Yield Catalog</CardTitle>
                <CardDescription className="text-xs font-bold uppercase tracking-widest opacity-50">Top performing logical nodes.</CardDescription>
             </CardHeader>
             <CardContent className="px-8">
@@ -208,7 +208,7 @@ function InventoryReport() {
              <PieChart className="w-32 h-32" />
           </div>
           <CardHeader className="p-8">
-            <CardTitle className="text-2xl font-bold italic tracking-tighter">Inventory Architecture</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tighter">Inventory Architecture</CardTitle>
             <CardDescription className="font-bold uppercase tracking-widest text-[10px] text-muted-foreground">Asset distribution by logical category.</CardDescription>
           </CardHeader>
           <CardContent className="px-8 pb-10">
@@ -301,7 +301,7 @@ function InventoryReport() {
                     </div>
                   </td>
                   <td className="px-8 py-5 text-right">
-                    <span className="text-xs font-bold italic tracking-tighter">84 Days Remaining</span>
+                    <span className="text-xs font-bold tracking-tighter">84 Days Remaining</span>
                   </td>
                 </tr>
               ))}
@@ -355,7 +355,7 @@ function DailyReport() {
       <Card className="border-none shadow-2xl bg-background overflow-hidden">
         <CardHeader className="p-8 flex-row items-center justify-between border-b bg-muted/20">
           <div>
-            <CardTitle className="text-2xl font-bold italic tracking-tighter">Diurnal Event Feed</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tighter">Diurnal Event Feed</CardTitle>
             <CardDescription className="text-xs font-bold uppercase tracking-widest opacity-50">Surveillance of real-time physical and logical operations.</CardDescription>
           </div>
           <div className="flex gap-2">

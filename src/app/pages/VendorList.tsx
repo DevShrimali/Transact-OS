@@ -84,7 +84,7 @@ export function VendorList() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
           <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Procurement Network</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic text-gray-900">Supply Chain Partners</h1>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Supply Chain Partners</h1>
           <p className="text-muted-foreground font-medium">Manage external entity relationships and logistical contact vectors.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -97,76 +97,120 @@ export function VendorList() {
                 <Plus className="h-4 w-4" /> Provision Entity
               </Button>
             </SheetTrigger>
-            <SheetContent className="sm:max-w-xl">
-              <SheetHeader>
-                <SheetTitle>Provision New Entity</SheetTitle>
-                <SheetDescription>
-                  Onboard a new supplier to the system. Provide their business and contact details.
-                </SheetDescription>
-              </SheetHeader>
-              <div className="grid gap-6 py-6 overflow-y-auto max-h-[calc(100vh-180px)] px-1">
-                <div className="space-y-4">
-                  <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Company Details</h4>
-                  <div className="space-y-2">
-                    <Label htmlFor="vendor-name">Legal Business Name</Label>
-                    <Input id="vendor-name" placeholder="e.g. Global Logistics Corp" />
+            <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">
+              <div className="px-10 pb-32 pt-10">
+                <SheetHeader className="mb-12">
+                  <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 mb-6 shadow-inner border border-emerald-500/20">
+                    <Building2 className="h-7 w-7" />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="tax-id">Tax ID / PAN</Label>
-                      <Input id="tax-id" placeholder="Enter identification number" />
+                  <SheetTitle className="text-3xl font-black tracking-tight">Provision New Entity</SheetTitle>
+                  <SheetDescription className="text-base font-medium">
+                    Onboard a new supplier to the system. Provide their business and contact details.
+                  </SheetDescription>
+                </SheetHeader>
+                
+                <div className="space-y-12">
+                  {/* Company Details */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Company Details</h3>
                     </div>
-                    <div className="space-y-2">
-                      <Label>Vendor Category</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="raw">Raw Materials</SelectItem>
-                          <SelectItem value="logistics">Logistics</SelectItem>
-                          <SelectItem value="services">Services</SelectItem>
-                          <SelectItem value="maintenance">Maintenance</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div className="space-y-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Legal Business Name</Label>
+                        <Input 
+                          id="vendor-name" 
+                          placeholder="e.g. Global Logistics Corp" 
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Tax ID / PAN</Label>
+                          <Input 
+                            id="tax-id" 
+                            placeholder="Enter identification number" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Vendor Category</Label>
+                          <Select>
+                            <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-emerald-500/20">
+                              <SelectValue placeholder="Select Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="raw" className="font-bold">Raw Materials</SelectItem>
+                              <SelectItem value="logistics" className="font-bold">Logistics</SelectItem>
+                              <SelectItem value="services" className="font-bold">Services</SelectItem>
+                              <SelectItem value="maintenance" className="font-bold">Maintenance</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </section>
 
-                <div className="space-y-4 pt-4 border-t">
-                  <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Primary Contact</h4>
-                  <div className="space-y-2">
-                    <Label htmlFor="contact-person">Contact Person</Label>
-                    <Input id="contact-person" placeholder="Full name" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" type="email" placeholder="email@business.com" />
+                  {/* Primary Contact */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Primary Contact</h3>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" placeholder="+1 (234) 567-890" />
+                    <div className="space-y-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Contact Person</Label>
+                        <Input 
+                          id="contact-person" 
+                          placeholder="Full name" 
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Email Address</Label>
+                          <Input 
+                            id="email" 
+                            type="email" 
+                            placeholder="email@business.com" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Phone Number</Label>
+                          <Input 
+                            id="phone" 
+                            placeholder="+1 (234) 567-890" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </section>
 
-                <div className="space-y-4 pt-4 border-t">
-                  <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Address</h4>
-                  <div className="space-y-2">
-                    <Label htmlFor="address">Street Address</Label>
-                    <textarea 
-                      id="address"
-                      className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="Street, Building, Unit..."
-                    />
+                  {/* Address */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Address</h3>
+                    </div>
+                    <div className="space-y-2.5">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Street Address</Label>
+                      <textarea 
+                        id="address"
+                        className="flex min-h-[100px] w-full rounded-xl border-none bg-muted/50 px-4 py-3 text-sm font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                        placeholder="Street, Building, Unit..."
+                      />
+                    </div>
+                  </section>
+
+                  <div className="pt-10 flex gap-4">
+                    <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsAddSheetOpen(false)}>Discard</Button>
+                    <Button className="flex-1 h-12 shadow-xl shadow-emerald-500/20 font-black tracking-wide bg-emerald-600 text-white hover:bg-emerald-700" onClick={() => setIsAddSheetOpen(false)}>Save Vendor</Button>
                   </div>
                 </div>
               </div>
-              <SheetFooter className="absolute bottom-0 left-0 right-0 p-6 bg-background border-t">
-                <Button variant="outline" className="w-full" onClick={() => setIsAddSheetOpen(false)}>Discard</Button>
-                <Button className="w-full" onClick={() => setIsAddSheetOpen(false)}>Save Vendor</Button>
-              </SheetFooter>
             </SheetContent>
           </Sheet>
         </div>

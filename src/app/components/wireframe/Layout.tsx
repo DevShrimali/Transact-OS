@@ -148,28 +148,32 @@ const AppSidebar = ({ currentPage, onNavigate }: { currentPage: Page; onNavigate
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b h-14 flex items-center px-4">
-        <div className="flex items-center gap-2 overflow-hidden w-full group-data-[collapsible=icon]:justify-center">
-            <div className="h-8 w-8 rounded-lg bg-primary shrink-0 flex items-center justify-center">
+      <SidebarHeader className="border-b h-16 flex items-center px-6">
+        <div className="flex items-center gap-3 overflow-hidden w-full group-data-[collapsible=icon]:justify-center">
+            <div className="h-9 w-9 rounded-xl bg-primary shrink-0 flex items-center justify-center shadow-md shadow-primary/20">
                <span className="text-primary-foreground font-black text-xs">OS</span>
             </div>
-            <span className="font-bold text-lg tracking-tight truncate group-data-[collapsible=icon]:hidden">
+            <span className="font-bold text-xl tracking-tight truncate group-data-[collapsible=icon]:hidden">
                Transact<span className="text-primary">OS</span>
             </span>
         </div>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-           <div className="flex items-center justify-between px-2 py-2">
-             <SidebarGroupLabel>Application</SidebarGroupLabel>
-             <button onClick={toggleFullscreen} className="p-1 hover:bg-accent rounded-md text-muted-foreground group-data-[collapsible=icon]:hidden">
-                {isFullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+      <SidebarContent className="gap-0 py-2">
+        <SidebarGroup className="px-3">
+           <div className="flex items-center justify-between px-2 py-4">
+             <SidebarGroupLabel className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">Application</SidebarGroupLabel>
+             <button onClick={toggleFullscreen} className="p-1 hover:bg-accent rounded-md text-muted-foreground group-data-[collapsible=icon]:hidden opacity-50 hover:opacity-100 transition-opacity">
+                {isFullscreen ? <Minimize className="h-3.5 w-3.5" /> : <Maximize className="h-3.5 w-3.5" />}
              </button>
            </div>
-          <SidebarMenu>
+          <SidebarMenu className="gap-1.5">
             {menuItems.map((item) => {
               if (item.type === "separator") {
-                return <SidebarSeparator key={item.id} className="my-2" />;
+                return (
+                  <div key={item.id} className="mt-6 mb-2 px-2 group-data-[collapsible=icon]:hidden">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50">{item.label}</p>
+                  </div>
+                );
               }
               const Icon = item.icon as React.ElementType;
               return (

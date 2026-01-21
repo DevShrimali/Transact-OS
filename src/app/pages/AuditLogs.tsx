@@ -64,8 +64,8 @@ export function AuditLogs() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Forensic Ledger</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Security Feed</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Forensic Ledger</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Security Feed</h1>
           <p className="text-muted-foreground font-medium">Real-time surveillance of system-wide administrative operations.</p>
         </div>
         <div className="flex items-center gap-3">

@@ -62,10 +62,11 @@ export function InventoryLedger() {
       className="max-w-[1600px] mx-auto space-y-8 pb-10"
     >
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between px-2">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Audit Ledger</h1>
-          <p className="text-muted-foreground mt-1 text-sm">Chronological tracking of stock movements and valuation changes.</p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between px-2">
+        <div className="space-y-1">
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Movement History</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Audit Ledger</h1>
+          <p className="text-muted-foreground font-medium">Chronological tracking of stock movements and valuation changes.</p>
         </div>
         <div className="flex items-center gap-3">
           <Button variant="outline" className="gap-2 shadow-sm border-muted">

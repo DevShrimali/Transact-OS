@@ -79,8 +79,8 @@ export function OutwardEntry() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Logistics</Badge>
-          <h1 className="text-4xl font-black tracking-tighter italic">Dispatch Ledger</h1>
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Logistics</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Dispatch Ledger</h1>
           <p className="text-muted-foreground font-medium">Outbound shipment tracking and delivery manifests.</p>
         </div>
         <div className="flex items-center gap-3">
@@ -93,87 +93,107 @@ export function OutwardEntry() {
                 <Box className="h-4 w-4" /> Create Manifest
               </Button>
             </SheetTrigger>
-            <SheetContent className="sm:max-w-xl overflow-y-auto w-[90vw]">
-              <SheetHeader className="pb-6 border-b">
-                <SheetTitle className="text-2xl font-black tracking-tighter text-primary">New Dispatch Entry</SheetTitle>
-                <SheetDescription className="font-medium">
-                  Create delivery note and assign carrier details.
-                </SheetDescription>
-              </SheetHeader>
-              
-              <div className="grid gap-6 py-6">
-                 {/* Customer Details */}
-                 <div className="grid gap-4">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-muted-foreground">Destination Information</h3>
-                    <div className="grid gap-2">
-                       <Label>Client / Destination</Label>
-                       <Select>
-                          <SelectTrigger className="h-11">
-                             <SelectValue placeholder="Search client..." />
+            <SheetContent className="sm:max-w-2xl overflow-y-auto px-0 border-none bg-background shadow-2xl">
+              <div className="px-10 pb-32 pt-10">
+                <SheetHeader className="mb-12">
+                  <div className="h-14 w-14 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-600 mb-6 shadow-inner border border-orange-500/20">
+                    <Box className="h-7 w-7" />
+                  </div>
+                  <SheetTitle className="text-3xl font-black tracking-tight">New Dispatch Entry</SheetTitle>
+                  <SheetDescription className="text-base font-medium">
+                    Create delivery note and assign carrier details.
+                  </SheetDescription>
+                </SheetHeader>
+                
+                <div className="space-y-12">
+                  {/* Destination Information */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-orange-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Destination Information</h3>
+                    </div>
+                    <div className="space-y-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Client / Destination</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-orange-500/20">
+                            <SelectValue placeholder="Search client..." />
                           </SelectTrigger>
                           <SelectContent>
-                             <SelectItem value="global">Global Motors</SelectItem>
-                             <SelectItem value="nexus">Nexus Systems</SelectItem>
+                            <SelectItem value="global" className="font-bold">Global Motors</SelectItem>
+                            <SelectItem value="nexus" className="font-bold">Nexus Systems</SelectItem>
                           </SelectContent>
-                       </Select>
+                        </Select>
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Order Ref.</Label>
+                          <Input 
+                            placeholder="ORD-2024-XXX" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-orange-500/20 font-mono uppercase font-bold" 
+                          />
+                        </div>
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Dispatch Date</Label>
+                          <Input 
+                            type="date" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-orange-500/20 font-bold" 
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Shipping Address</Label>
+                        <Input 
+                          placeholder="Enter primary delivery address..." 
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-orange-500/20 font-bold" 
+                        />
+                      </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                       <div className="grid gap-2">
-                          <Label>Order Ref.</Label>
-                          <Input placeholder="ORD-2024-XXX" className="h-11 font-mono uppercase" />
-                       </div>
-                       <div className="grid gap-2">
-                          <Label>Dispatch Date</Label>
-                          <Input type="date" className="h-11" />
-                       </div>
-                    </div>
-                    <div className="grid gap-2">
-                       <Label>Shipping Address</Label>
-                       <Input placeholder="Enter primary delivery address..." className="h-11" />
-                    </div>
-                 </div>
+                  </section>
 
-                 <Separator />
+                  {/* Manifest Items */}
+                  <section className="space-y-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-6 bg-orange-500 rounded-full" />
+                        <h3 className="font-black text-xl tracking-tight">Manifest Items</h3>
+                      </div>
+                      <Button variant="outline" size="sm" className="h-8 text-xs font-bold">+ Add Row</Button>
+                    </div>
+                    <div className="border rounded-xl overflow-hidden bg-muted/20">
+                      <Table>
+                        <TableHeader className="bg-muted/50">
+                          <TableRow>
+                            <TableHead className="h-9 text-[10px] font-black uppercase">Item SKU</TableHead>
+                            <TableHead className="h-9 text-[10px] font-black uppercase w-20">Qty</TableHead>
+                            <TableHead className="h-9 text-[10px] font-black uppercase w-24 text-right">Value</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {[1, 2].map(i => (
+                            <TableRow key={i}>
+                              <TableCell className="py-2">
+                                <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 placeholder:text-muted-foreground/50" placeholder="Search item..." />
+                              </TableCell>
+                              <TableCell className="py-2">
+                                <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 font-mono" placeholder="0" />
+                              </TableCell>
+                              <TableCell className="py-2 text-right">
+                                <span className="font-mono text-xs">$0.00</span>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </section>
 
-                 {/* Items */}
-                 <div className="grid gap-4">
-                    <div className="flex items-center justify-between">
-                       <h3 className="text-sm font-black uppercase tracking-wider text-muted-foreground">Manifest Items</h3>
-                       <Button variant="outline" size="sm" className="h-8 text-xs font-bold">+ Add Row</Button>
-                    </div>
-                    <div className="border rounded-lg overflow-hidden">
-                       <Table>
-                          <TableHeader className="bg-muted/50">
-                             <TableRow>
-                                <TableHead className="h-9 text-[10px] font-black uppercase">Item SKU</TableHead>
-                                <TableHead className="h-9 text-[10px] font-black uppercase w-20">Qty</TableHead>
-                                <TableHead className="h-9 text-[10px] font-black uppercase w-24 text-right">Value</TableHead>
-                             </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                             {[1, 2].map(i => (
-                                <TableRow key={i}>
-                                   <TableCell className="py-2">
-                                      <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 placeholder:text-muted-foreground/50" placeholder="Search item..." />
-                                   </TableCell>
-                                   <TableCell className="py-2">
-                                      <Input className="h-8 w-full border-none shadow-none focus-visible:ring-0 bg-transparent px-0 font-mono" placeholder="0" />
-                                   </TableCell>
-                                   <TableCell className="py-2 text-right">
-                                      <span className="font-mono text-xs">$0.00</span>
-                                   </TableCell>
-                                </TableRow>
-                             ))}
-                          </TableBody>
-                       </Table>
-                    </div>
-                 </div>
+                  <div className="pt-10 flex gap-4">
+                    <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsEntryOpen(false)}>Cancel</Button>
+                    <Button className="flex-1 h-12 shadow-xl shadow-orange-500/20 font-black tracking-wide bg-orange-600 text-white hover:bg-orange-700">Generate Manifest</Button>
+                  </div>
+                </div>
               </div>
-
-              <SheetFooter className="border-t pt-6 gap-2 sm:gap-0">
-                <Button variant="outline" className="h-11" onClick={() => setIsEntryOpen(false)}>Cancel</Button>
-                <Button className="h-11 font-bold">Generate Manifest</Button>
-              </SheetFooter>
             </SheetContent>
           </Sheet>
         </div>

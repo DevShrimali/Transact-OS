@@ -74,10 +74,11 @@ export function ViewStock() {
       className="max-w-[1600px] mx-auto space-y-8 pb-10"
     >
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Stock Inventory</h1>
-          <p className="text-muted-foreground mt-1">Real-time oversight of all physical assets and allocations.</p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="space-y-1">
+          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Inventory Grid</Badge>
+          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Stock Inventory</h1>
+          <p className="text-muted-foreground font-medium">Real-time oversight of all physical assets and allocations.</p>
         </div>
         <div className="flex items-center gap-3">
           <Button variant="outline" className="gap-2">
