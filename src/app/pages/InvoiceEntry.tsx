@@ -186,6 +186,87 @@ export function InvoiceEntry() {
                     </div>
                   </section>
 
+                  {/* Warehouse Location */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-blue-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Warehouse Location</h3>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Warehouse</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-blue-500/20">
+                            <SelectValue placeholder="Select warehouse..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="wh-a" className="font-bold">Main Warehouse A</SelectItem>
+                            <SelectItem value="wh-b" className="font-bold">Warehouse B</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Zone</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-blue-500/20">
+                            <SelectValue placeholder="Select zone..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="z1" className="font-bold">Zone 1 - Electronics</SelectItem>
+                            <SelectItem value="z2" className="font-bold">Zone 2 - Heavy Goods</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Rack</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-blue-500/20">
+                            <SelectValue placeholder="Select rack..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="r-a" className="font-bold">Rack A</SelectItem>
+                            <SelectItem value="r-b" className="font-bold">Rack B</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Bin</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-blue-500/20">
+                            <SelectValue placeholder="Select bin..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="b-01" className="font-bold">Bin A-01</SelectItem>
+                            <SelectItem value="b-02" className="font-bold">Bin A-02</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Reference Type */}
+                  <section className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-6 bg-blue-500 rounded-full" />
+                      <h3 className="font-black text-xl tracking-tight">Reference Type</h3>
+                    </div>
+                    <div className="space-y-2.5">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Document Type</Label>
+                      <Select>
+                        <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-blue-500/20">
+                          <SelectValue placeholder="Select reference type..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="invoice" className="font-bold">Invoice</SelectItem>
+                          <SelectItem value="work-order" className="font-bold">Work Order</SelectItem>
+                          <SelectItem value="purchase-order" className="font-bold">Purchase Order</SelectItem>
+                          <SelectItem value="delivery-note" className="font-bold">Delivery Note</SelectItem>
+                          <SelectItem value="other" className="font-bold">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </section>
+
                   <div className="pt-10 flex gap-4">
                     <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsEntryOpen(false)}>Cancel</Button>
                     <Button className="flex-1 h-12 shadow-xl shadow-blue-500/20 font-black tracking-wide bg-blue-600 text-white hover:bg-blue-700">Confirm Receipt</Button>
@@ -243,7 +324,6 @@ export function InvoiceEntry() {
                        <TableHead className="font-black text-[11px] uppercase tracking-wider">Vendor Entity</TableHead>
                        <TableHead className="font-black text-[11px] uppercase tracking-wider">Invoice No.</TableHead>
                        <TableHead className="font-black text-[11px] uppercase tracking-wider text-right">Total Value</TableHead>
-                       <TableHead className="font-black text-[11px] uppercase tracking-wider text-center">Status</TableHead>
                        <TableHead className="w-[50px]"></TableHead>
                     </TableRow>
                  </TableHeader>
@@ -261,17 +341,6 @@ export function InvoiceEntry() {
                           </TableCell>
                           <TableCell className="font-mono text-xs">{entry.invoiceNo}</TableCell>
                           <TableCell className="text-right font-black text-sm">{entry.total}</TableCell>
-                          <TableCell className="text-center">
-                             <Badge 
-                                variant="outline" 
-                                className={cn(
-                                   "text-[10px] font-bold uppercase tracking-widest border-0",
-                                   entry.status === 'Verified' ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200" : "bg-amber-100 text-amber-700 hover:bg-amber-200"
-                                )}
-                             >
-                                {entry.status}
-                             </Badge>
-                          </TableCell>
                           <TableCell>
                              <DropdownMenu>
                                 <DropdownMenuTrigger asChild>

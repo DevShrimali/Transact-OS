@@ -717,8 +717,12 @@ export function POS() {
                         <span>${subtotal.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-xs font-black uppercase tracking-widest text-muted-foreground/60">
-                        <span>Fiscal Levy (6.5%)</span>
-                        <span>${taxTotal.toFixed(2)}</span>
+                        <span>CGST (3.25%)</span>
+                        <span>${(taxTotal / 2).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-xs font-black uppercase tracking-widest text-muted-foreground/60">
+                        <span>SGST (3.25%)</span>
+                        <span>${(taxTotal / 2).toFixed(2)}</span>
                       </div>
                       <Separator className="bg-slate-200" />
                       <div className="flex justify-between font-black text-3xl tracking-tighter items-end">

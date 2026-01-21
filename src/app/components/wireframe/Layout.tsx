@@ -44,6 +44,7 @@ export type Page =
   | "login"
   | "staff-login"
   | "dashboard"
+  | "department-category"
   | "items"
   | "add-item"
   | "discount"
@@ -73,6 +74,7 @@ interface LayoutProps {
 
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { id: "department-category", label: "Department & Category", icon: FileText },
   { id: "items", label: "Item List", icon: Package },
   { id: "discount", label: "Discount", icon: Percent },
   { id: "vendors", label: "Vendors", icon: Users },

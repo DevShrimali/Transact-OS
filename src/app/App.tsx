@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Login } from './pages/Login';
 import { StaffLogin } from './pages/StaffLogin';
 import { Dashboard } from './pages/Dashboard';
+import { DepartmentCategory } from './pages/DepartmentCategory';
 import { ItemList } from './pages/ItemList';
 import { AddEditItem } from './pages/AddEditItem';
 import { Discount } from './pages/Discount';
@@ -60,6 +61,7 @@ export default function App() {
         />
       );
       case 'dashboard': return <Dashboard onNavigate={(page) => setCurrentPage(page as Page)} />;
+      case 'department-category': return <DepartmentCategory />;
       case 'items': return <ItemList />;
       case 'add-item': return <AddEditItem />;
       case 'discount': return <Discount />;
