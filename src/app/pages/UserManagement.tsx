@@ -35,7 +35,6 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetFooter,
 } from "@/app/components/ui/sheet";
 import {
   Select,
@@ -91,10 +90,10 @@ export function UserManagement() {
   const [users] = useState<User[]>(mockUsers);
 
   const stats = [
-    { title: "Total Crew", value: "32", sub: "+3 new this month", icon: Users, color: "text-blue-600", bg: "bg-blue-50/50" },
-    { title: "Active Now", value: "14", sub: "Internal network", icon: UserCheck, color: "text-emerald-600", bg: "bg-emerald-50/50" },
-    { title: "Off-duty", value: "18", sub: "Account inactive", icon: UserMinus, color: "text-slate-400", bg: "bg-slate-50" },
-    { title: "Supervisors", value: "4", sub: "Elevated access", icon: ShieldAlert, color: "text-amber-600", bg: "bg-amber-50/50" },
+    { title: "Total Crew", value: "32", sub: "+3 new this month", icon: Users, color: "text-blue-600", bg: "bg-blue-50", code: "HR-TOTAL" },
+    { title: "Active Now", value: "14", sub: "Internal network", icon: UserCheck, color: "text-emerald-600", bg: "bg-emerald-50", code: "HR-ACTIVE" },
+    { title: "Off-duty", value: "18", sub: "Account inactive", icon: UserMinus, color: "text-slate-400", bg: "bg-slate-50", code: "HR-AWAY" },
+    { title: "Supervisors", value: "4", sub: "Elevated access", icon: ShieldAlert, color: "text-amber-600", bg: "bg-amber-50", code: "SEC-ADMIN" },
   ];
 
   return (
@@ -131,7 +130,7 @@ export function UserManagement() {
                      <div className={cn("p-3 rounded-2xl transition-transform group-hover:scale-110", stat.bg, stat.color)}>
                         <stat.icon className="h-5 w-5" />
                      </div>
-                     <Badge variant="outline" className="text-[10px] font-bold opacity-50 px-0">METRIC_00{idx+1}</Badge>
+                     <Badge variant="outline" className="text-[10px] font-bold opacity-50 border-none">{stat.code}</Badge>
                   </div>
                   <div>
                     <h3 className="text-3xl font-black tracking-tight">{stat.value}</h3>
@@ -397,15 +396,14 @@ export function UserManagement() {
                     </div>
                  </section>
               </div>
-           </div>
-
-           <SheetFooter className="fixed bottom-0 left-0 right-0 p-10 pt-6 bg-background/80 backdrop-blur-xl border-t z-50">
-             <div className="flex gap-4 w-full">
-                <Button variant="ghost" className="flex-1 h-16 rounded-2xl font-black text-xs uppercase tracking-widest text-muted-foreground hover:bg-muted" onClick={() => setIsSheetOpen(false)}>Abort Mission</Button>
-                <Button className="flex-1 h-16 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/40" onClick={() => setIsSheetOpen(false)}>Confirm Provisioning</Button>
-             </div>
-           </SheetFooter>
-        </SheetContent>
+            <div className="pt-10 flex gap-4 mt-auto">
+                 <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold rounded-xl" onClick={() => setIsSheetOpen(false)}>Discard</Button>
+                 <Button className="flex-1 h-12 shadow-xl shadow-primary/20 font-black tracking-wide rounded-xl" onClick={() => setIsSheetOpen(false)}>
+                    Confirm Provisioning
+                 </Button>
+            </div>
+         </div>
+      </SheetContent>
       </Sheet>
     </motion.div>
   );
