@@ -46,20 +46,8 @@ import { motion } from 'framer-motion';
 import { cn } from '@/app/components/ui/utils';
 import { inventoryStats } from '@/app/data/mockSystemData';
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+import { container, item } from "@/app/components/ui/animations";
 
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  show: { y: 0, opacity: 1 }
-};
 
 export function ItemList() {
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
@@ -121,7 +109,7 @@ export function ItemList() {
                              <Input 
                                id="name" 
                                placeholder="e.g. Wireless Mouse" 
-                               className="h-12 border-none bg-muted/50 focus-visible:ring-indigo-500/20 font-bold"
+                               className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold"
                              />
                           </div>
                           <div className="grid grid-cols-2 gap-6">
@@ -141,7 +129,7 @@ export function ItemList() {
                                    <Input 
                                       id="barcode" 
                                       placeholder="Scan barcode" 
-                                      className="h-12 border-none bg-muted/50 pl-11 focus-visible:ring-indigo-500/20 font-bold"
+                                      className="h-12 border-none bg-muted/50 pl-11 focus-visible:ring-primary/20 font-bold"
                                    />
                                 </div>
                              </div>
@@ -150,7 +138,7 @@ export function ItemList() {
                              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Description</Label>
                              <textarea 
                                id="desc"
-                               className="flex min-h-[100px] w-full rounded-xl border-none bg-muted/50 px-4 py-3 text-sm font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                               className="flex min-h-[100px] w-full rounded-xl border-none bg-muted/50 px-4 py-3 text-sm font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
                                placeholder="Enter detailed description..."
                              />
                           </div>
@@ -160,14 +148,14 @@ export function ItemList() {
                     {/* Classification */}
                     <section className="space-y-6">
                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-1.5 h-6 bg-indigo-500 rounded-full" />
+                          <div className="w-1.5 h-6 bg-primary rounded-full" />
                           <h3 className="font-black text-xl tracking-tight">Classification & Tax</h3>
                        </div>
                        <div className="grid grid-cols-2 gap-6">
                           <div className="space-y-2.5">
                              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Category</Label>
                              <Select>
-                               <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-indigo-500/20">
+                               <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-primary/20">
                                  <SelectValue placeholder="Select Category" />
                                </SelectTrigger>
                                <SelectContent>
@@ -184,7 +172,7 @@ export function ItemList() {
                                 id="tax" 
                                 type="number" 
                                 placeholder="18" 
-                                className="h-12 border-none bg-muted/50 focus-visible:ring-indigo-500/20 font-bold"
+                                className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold"
                              />
                           </div>
                        </div>
@@ -203,13 +191,13 @@ export function ItemList() {
                                 id="reorder" 
                                 type="number" 
                                 placeholder="10" 
-                                className="h-12 border-none bg-muted/50 focus-visible:ring-indigo-500/20 font-bold"
+                                className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold"
                              />
                           </div>
                           <div className="space-y-2.5">
                              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Unit of Measure</Label>
                              <Select>
-                               <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-indigo-500/20">
+                               <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-primary/20">
                                  <SelectValue placeholder="Select Unit" />
                                </SelectTrigger>
                                <SelectContent>
@@ -225,7 +213,7 @@ export function ItemList() {
 
                     <div className="pt-10 flex gap-4">
                        <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold" onClick={() => setIsAddSheetOpen(false)}>Cancel</Button>
-                       <Button className="flex-1 h-12 shadow-xl shadow-indigo-500/20 font-black tracking-wide bg-indigo-600 hover:bg-indigo-700 text-white border-none" onClick={() => setIsAddSheetOpen(false)}>
+                       <Button className="flex-1 h-12 shadow-xl shadow-primary/20 font-black tracking-wide bg-primary hover:bg-primary/90 text-white border-none" onClick={() => setIsAddSheetOpen(false)}>
                           Create Item
                        </Button>
                     </div>
@@ -240,7 +228,7 @@ export function ItemList() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, idx) => (
           <motion.div key={idx} variants={item}>
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <CardContent className="p-6 flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
@@ -315,7 +303,7 @@ export function ItemList() {
             </TableHeader>
             <TableBody>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <TableRow key={i} className="hover:bg-muted/30 transition-colors group">
+                <TableRow key={i} className="hover:bg-muted/5 transition-colors border-l-4 border-l-transparent hover:border-l-primary/40 group">
                   <TableCell className="font-mono text-xs font-semibold text-primary">
                     SKU-{2024 + i}
                   </TableCell>

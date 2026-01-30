@@ -36,20 +36,7 @@ import {
 import { motion } from "framer-motion";
 import { cn } from "@/app/components/ui/utils";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05
-    }
-  }
-};
-
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  show: { y: 0, opacity: 1 }
-};
+import { container, item } from "@/app/components/ui/animations";
 
 export function CompanySettings() {
   return (
@@ -57,7 +44,7 @@ export function CompanySettings() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="max-w-[1400px] mx-auto space-y-10 pb-20 px-4"
+      className="max-w-[1600px] mx-auto space-y-10 pb-20 px-4"
     >
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">

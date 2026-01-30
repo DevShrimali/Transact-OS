@@ -358,60 +358,68 @@ export function DepartmentCategory() {
               </div>
             </div>
           </div>
-          <table className="w-full">
-            <thead className="bg-muted/50 border-b">
-              <tr>
-                <th className="text-left py-4 px-6 text-xs font-bold text-muted-foreground uppercase tracking-widest">Identity</th>
-                <th className="text-left py-4 px-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">Category Name</th>
-                <th className="text-left py-4 px-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">Department</th>
-                <th className="text-left py-4 px-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">Created</th>
-                <th className="text-right py-4 px-6 text-xs font-bold text-muted-foreground uppercase tracking-widest">Control</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-muted/30">
-              <AnimatePresence>
-                {filteredCategories.map((cat) => (
-                  <motion.tr 
-                    key={cat.id}
-                    layout
-                    className="group hover:bg-muted/10 transition-colors"
-                  >
-                    <td className="py-4 px-6">
-                      <span className="font-mono text-xs font-bold text-primary">{cat.id}</span>
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className="font-semibold text-sm group-hover:text-primary transition-colors">{cat.name}</span>
-                    </td>
-                    <td className="py-4 px-4">
-                      <Badge variant="outline" className="text-[10px] h-5 px-2 font-medium bg-blue-50 text-blue-700 border-blue-200">
-                        {cat.departmentName}
-                      </Badge>
-                    </td>
-                    <td className="py-4 px-4 text-xs font-medium text-muted-foreground">{cat.createdAt}</td>
-                    <td className="py-4 px-6 text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                             <MoreVertical className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-44">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem onClick={() => handleEditCategory(cat)}>
-                             <Edit className="h-4 w-4 mr-2" /> Edit Details
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-destructive font-medium" onClick={() => handleDeleteCategory(cat)}>
-                             <Trash2 className="h-4 w-4 mr-2" /> Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </td>
-                  </motion.tr>
-                ))}
-              </AnimatePresence>
-            </tbody>
-          </table>
+          <div className="p-4 space-y-2 bg-muted/10">
+            <AnimatePresence>
+              {filteredCategories.map((cat) => (
+                <motion.div 
+                  key={cat.id}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="group flex items-center justify-between p-4 bg-background rounded-xl border border-border/50 shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs shadow-inner">
+                      {cat.name.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-sm tracking-tight text-foreground/90">{cat.name}</h4>
+                        <span className="text-[10px] font-mono text-muted-foreground/60 bg-muted px-1.5 py-0.5 rounded-sm">{cat.id}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
+                        <div className="flex items-center gap-1.5">
+                          <FolderTree className="h-3 w-3" />
+                          <span>{cat.departmentName}</span>
+                        </div>
+                        <span className="text-muted-foreground/40">•</span>
+                        <span>{cat.createdAt}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="hidden sm:flex bg-blue-50/50 text-blue-700 border-blue-100 hover:bg-blue-100/50 transition-colors cursor-default">
+                      {cat.departmentName}
+                    </Badge>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
+                           <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-44">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem onClick={() => handleEditCategory(cat)}>
+                           <Edit className="h-4 w-4 mr-2" /> Edit Details
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="text-destructive font-medium" onClick={() => handleDeleteCategory(cat)}>
+                           <Trash2 className="h-4 w-4 mr-2" /> Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {filteredCategories.length === 0 && (
+               <div className="text-center py-10 text-muted-foreground">
+                  <p>No categories found.</p>
+               </div>
+            )}
+          </div>
           <div className="flex items-center justify-between border-t px-6 py-4 bg-muted/20">
             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Total: {filteredCategories.length} Categories</span>
           </div>

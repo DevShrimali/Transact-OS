@@ -27,20 +27,7 @@ import {
   TooltipTrigger,
 } from "@/app/components/ui/tooltip";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  show: { y: 0, opacity: 1 }
-};
+import { container, item } from "@/app/components/ui/animations";
 
 export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }) {
   // Mock Data

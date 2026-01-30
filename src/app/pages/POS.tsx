@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Search,
   ShoppingCart,
@@ -28,7 +28,9 @@ import {
   ChevronRight,
   ArrowUpRight,
   Layers,
-  Smartphone
+  Smartphone,
+  Maximize,
+  Minimize
 } from "lucide-react";
 import {
   Card,
@@ -137,6 +139,22 @@ export function POS() {
   const [selectedCustomer, setSelectedCustomer] =
     useState<Customer | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement && containerRef.current) {
+      containerRef.current.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+      setIsFullscreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    }
+  };
 
   // New Customer Form State
   const [newCustomer, setNewCustomer] = useState({
@@ -415,7 +433,7 @@ export function POS() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-slate-50/50 -m-6 p-6 overflow-hidden">
+    <div ref={containerRef} className="h-full flex flex-col bg-slate-50 -m-6 p-6 overflow-hidden">
       {/* Dynamic Navigation Header */}
       <motion.div 
         initial={{ y: -20, opacity: 0 }}
@@ -424,9 +442,14 @@ export function POS() {
       >
         <div className="space-y-1">
           <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-primary/30 text-primary uppercase">Active Session</Badge>
-          <h1 className="text-4xl font-black tracking-tighter flex items-center gap-3">
-             <Zap className="h-8 w-8 text-primary fill-primary" /> Transact <span className="text-muted-foreground/30 font-light not-italic">OS</span>
-          </h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-4xl font-black tracking-tighter flex items-center gap-3">
+               <Zap className="h-8 w-8 text-primary fill-primary" /> Transact <span className="text-muted-foreground/30 font-light not-italic">OS</span>
+            </h1>
+            <Button variant="ghost" size="icon" onClick={toggleFullScreen} className="rounded-xl h-10 w-10 text-muted-foreground hover:text-primary hover:bg-primary/10">
+               {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
 
         <div className="flex items-center gap-3 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-100">
@@ -476,7 +499,7 @@ export function POS() {
             >
               {/* Quick Action Matrix */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Card className="border-none shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group cursor-pointer bg-primary text-primary-foreground" onClick={handleStart}>
+                <Card className="border-none shadow-sm hover:shadow-xl transition-all duration-500 group cursor-pointer bg-primary text-primary-foreground" onClick={handleStart}>
                    <CardContent className="p-8 flex flex-col items-center justify-center text-center space-y-4">
                       <div className="h-16 w-16 rounded-3xl bg-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform duration-500">
                          <Plus className="h-8 w-8" />
@@ -493,7 +516,7 @@ export function POS() {
                    { label: 'Open Escrow', icon: Wallet, desc: 'Pending Settlements', color: 'text-blue-600', bg: 'bg-blue-100' },
                    { label: 'System Audit', icon: ShieldCheck, desc: 'Session Verification', color: 'text-emerald-600', bg: 'bg-emerald-100' }
                 ].map((action, i) => (
-                  <Card key={i} className="border-none shadow-sm hover:shadow-lg transition-all duration-500 overflow-hidden group cursor-pointer">
+                  <Card key={i} className="border-none shadow-sm hover:shadow-lg transition-all duration-500 group cursor-pointer">
                     <CardContent className="p-8 flex flex-col items-center justify-center text-center space-y-4">
                       <div className={cn("h-16 w-16 rounded-3xl flex items-center justify-center transition-transform duration-500 group-hover:-rotate-12", action.bg, action.color)}>
                          <action.icon className="h-7 w-7" />
@@ -594,7 +617,7 @@ export function POS() {
             >
               {/* Entity Selector (Left) */}
               <div className="col-span-12 lg:col-span-7 space-y-8">
-                <Card className="border-none shadow-sm overflow-hidden bg-background">
+                <Card className="border-none shadow-sm bg-background">
                   <CardHeader className="p-8 pb-4">
                     <CardTitle className="text-2xl font-black tracking-tighter">Entity Selection</CardTitle>
                     <div className="flex gap-3 mt-4">
@@ -621,7 +644,7 @@ export function POS() {
                           whileHover={{ scale: 1.02, y: -4 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={addToCart}
-                          className="flex flex-col items-start p-5 rounded-3xl bg-slate-50/50 border border-slate-100/50 hover:bg-white hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all text-left group overflow-hidden relative"
+                          className="flex flex-col items-start p-5 rounded-3xl bg-slate-50/50 border border-slate-100/50 hover:bg-white hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all text-left group relative"
                         >
                           <div className="w-full h-32 bg-white rounded-2xl mb-4 flex items-center justify-center border border-slate-100 shadow-inner group-hover:scale-110 transition-transform duration-500">
                              <Package className="w-10 h-10 text-slate-200 group-hover:text-primary/40 transition-colors" />
@@ -632,7 +655,7 @@ export function POS() {
                              </div>
                           </div>
                           <div className="space-y-1 w-full">
-                            <h4 className="font-black text-sm tracking-tight truncate leading-tight uppercase">Industrial Component {i}A</h4>
+                            <h4 className="font-black text-sm tracking-tight leading-tight uppercase">Industrial Component {i}A</h4>
                             <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest">SKU: 0x{i}F92B</p>
                             <div className="pt-2 flex items-center justify-between">
                                <span className="text-lg font-black text-primary">$12.50</span>

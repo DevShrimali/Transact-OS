@@ -109,7 +109,7 @@ function SalesReport() {
     <div className="space-y-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {metrics.map((m, i) => (
-          <Card key={i} className="border-none shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+          <Card key={i} className="border-none shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden group">
             <CardContent className="p-6">
                <div className="flex justify-between items-start mb-4">
                   <div className={cn("p-3 rounded-2xl transition-transform group-hover:scale-110 duration-500", m.bg, m.color)}>
