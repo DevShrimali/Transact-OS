@@ -452,14 +452,14 @@ export function POS() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-100">
+        <div className="flex items-center gap-3 bg-white p-1.5 rounded-2xl shadow-sm border border-slate-100 overflow-x-auto max-w-full scrollbar-none">
           {[
             { id: "start", label: "Control", icon: Building2 },
             { id: "search", label: "Order", icon: ShoppingCart },
             { id: "payment", label: "Escrow", icon: Wallet },
             { id: "receipt", label: "Summary", icon: Receipt },
           ].map((s, idx, arr) => (
-            <div key={s.id} className="flex items-center">
+            <div key={s.id} className="flex items-center shrink-0">
               <button
                 onClick={() => setStep(s.id as POSStep)}
                 className={cn(
@@ -506,7 +506,7 @@ export function POS() {
                       </div>
                       <div>
                          <h3 className="text-xl font-black uppercase tracking-tighter">New Transaction</h3>
-                         <p className="text-primary-foreground/60 text-xs font-bold tracking-widest mt-1 uppercase">Initialize fresh terminal</p>
+                         <p className="text-primary-foreground/60 text-[10px] font-black tracking-widest mt-1 uppercase">Initialize fresh terminal</p>
                       </div>
                    </CardContent>
                 </Card>
@@ -985,76 +985,96 @@ export function POS() {
       {step === "receipt" && (
         <motion.div
           key="receipt"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex-1 flex items-center justify-center px-4"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex-1 flex items-center justify-center p-6"
         >
-          <div className="w-full max-w-md relative">
-             <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                <div className="h-24 w-24 rounded-full bg-emerald-500 shadow-2xl shadow-emerald-500/40 flex items-center justify-center text-white border-8 border-white group">
-                   <CheckCircle className="h-10 w-10 group-hover:scale-110 transition-transform" />
+          <Card className="w-full max-w-5xl border-none shadow-2xl overflow-hidden bg-white grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+             
+             {/* Left Panel: Visual/Result */}
+             <div className="lg:col-span-5 bg-slate-900 text-white p-10 flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+                
+                <div className="relative z-10">
+                   <div className="h-16 w-16 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/50 mb-6">
+                      <CheckCircle className="h-8 w-8" />
+                   </div>
+                   <h2 className="text-3xl font-black tracking-tighter uppercase mb-2">Transaction<br/>Complete</h2>
+                   <p className="text-slate-400 font-medium text-sm">Escrow verified and released to settlement layer.</p>
+                </div>
+
+                <div className="relative z-10 p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm mt-10">
+                   <div className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-2">Total Settled</div>
+                   <div className="text-5xl font-black tracking-tighter flex items-start">
+                      <span className="text-lg pt-1 mr-1 text-emerald-400">$</span>
+                      <span>{total.toFixed(2)}</span>
+                   </div>
+                </div>
+                
+                <div className="relative z-10 mt-auto pt-10">
+                   <p className="text-[10px] font-black uppercase tracking-[.3em] opacity-30">UIMS_SECURE_HASH_#9921</p>
                 </div>
              </div>
 
-             <Card className="border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden bg-white pt-16">
-                <CardHeader className="text-center p-8">
-                   <Badge variant="outline" className="text-[10px] font-black tracking-[0.3em] mb-4 border-emerald-200 text-emerald-600 bg-emerald-50">Transaction Sealed</Badge>
-                   <CardTitle className="text-4xl font-black tracking-tighter uppercase leading-none mb-2">Ref_Txn #1004A</CardTitle>
-                   <CardDescription className="text-[10px] font-black uppercase tracking-widest">System Timestamp: {new Date().toLocaleTimeString()} :: {new Date().toLocaleDateString()}</CardDescription>
-                </CardHeader>
-                
-                <CardContent className="p-8 pt-0 space-y-8">
-                   <div className="p-8 rounded-[2rem] bg-slate-900 text-white relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -mr-10 -mt-10" />
-                      <div className="flex justify-between items-end relative z-10">
-                         <div className="space-y-1">
-                            <div className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Settled Valuation</div>
-                            <div className="text-4xl font-black tracking-tighter flex items-start">
-                               <span className="text-lg pt-1 mr-1">$</span>
-                               <span>{total.toFixed(2)}</span>
-                            </div>
-                         </div>
-                         <div className="h-12 w-12 rounded-xl border border-white/10 flex items-center justify-center bg-white/5">
-                            <Zap className="h-6 w-6 text-primary fill-primary" />
-                         </div>
-                      </div>
+             {/* Right Panel: Receipt Details */}
+             <div className="lg:col-span-7 p-10 flex flex-col bg-white">
+                <div className="flex justify-between items-start mb-8">
+                   <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50 mb-1">Reference ID</p>
+                      <h3 className="text-3xl font-black tracking-tighter uppercase text-slate-900">#REF_1004A</h3>
                    </div>
-
-                   <div className="space-y-4">
-                      <div className="flex justify-between text-xs font-black uppercase tracking-widest opacity-30">
-                         <span>Network Confirmation</span>
-                         <span>0x_VERIFIED</span>
-                      </div>
-                      <div className="space-y-2 border-t border-dashed border-slate-100 pt-4">
-                         {paymentMethods.map((pm, i) => (
-                            <div key={i} className="flex justify-between text-sm font-bold">
-                               <span className="opacity-40 uppercase tracking-tighter">Settlement Node_{i+1} ({pm.type})</span>
-                               <span className="italic">${pm.amount.toFixed(2)}</span>
-                            </div>
-                         ))}
-                      </div>
-                   </div>
-
-                   <div className="grid grid-cols-2 gap-4">
-                      <Button variant="outline" className="h-14 rounded-2xl font-black uppercase text-[10px] tracking-widest border-slate-100 hover:bg-slate-50 gap-2">
-                         <Printer className="h-3.5 w-3.5" /> Output Physical
-                      </Button>
-                      <Button className="h-14 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-primary/20 gap-2" onClick={() => {
-                        setStep("start");
-                        setPaymentMode(null);
-                        setPaymentMethods([]);
-                        setCart([]);
-                      }}>
-                         <Plus className="h-3.5 w-3.5" /> New Session
-                      </Button>
-                   </div>
-                </CardContent>
-
-                <div className="p-6 bg-slate-50/50 text-center border-t border-slate-100">
-                   <p className="text-[9px] font-black uppercase tracking-[.5em] opacity-20 leading-loose">Transact_OS_v4.2.0 // Secured by UIMS Forensics</p>
+                   <Badge variant="outline" className="h-8 px-3 text-[10px] font-black tracking-widest uppercase border-slate-200 bg-slate-50 text-slate-500">
+                      {new Date().toLocaleTimeString()}
+                   </Badge>
                 </div>
-             </Card>
-          </div>
+
+                <div className="space-y-6 flex-1">
+                   <div className="space-y-3">
+                      <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 border-b border-slate-100 pb-2">
+                         <span>Payment Protocol</span>
+                         <span>Allocation</span>
+                      </div>
+                      {paymentMethods.length > 0 ? paymentMethods.map((pm, i) => (
+                         <div key={i} className="flex justify-between text-sm font-bold group">
+                            <div className="flex items-center gap-2">
+                               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                               <span className="uppercase tracking-tight text-slate-700">{pm.type} Node_{i+1}</span>
+                            </div>
+                            <span className="font-mono">${pm.amount.toFixed(2)}</span>
+                         </div>
+                      )) : (
+                         <div className="text-sm text-muted-foreground">Pending Payment Data...</div>
+                      )}
+                   </div>
+
+                   {/* Mock Network Log */}
+                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
+                      <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-600">
+                         <CheckCircle className="h-3 w-3" /> Block_Height: 18,293,001 verified
+                      </div>
+                      <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400">
+                         <Zap className="h-3 w-3" /> Latency: 4ms
+                      </div>
+                   </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-slate-100">
+                   <Button variant="outline" className="h-14 rounded-xl font-black uppercase text-[10px] tracking-widest border-slate-200 hover:bg-slate-50 hover:border-slate-300 gap-2 transition-all">
+                      <Printer className="h-4 w-4" /> Print Receipt
+                   </Button>
+                   <Button className="h-14 rounded-xl font-black uppercase text-[10px] tracking-widest shadow-xl shadow-primary/20 gap-2 transition-transform active:scale-95" onClick={() => {
+                     setStep("start");
+                     setPaymentMode(null);
+                     setPaymentMethods([]);
+                     setCart([]);
+                   }}>
+                      <Plus className="h-4 w-4" /> New Session
+                   </Button>
+                </div>
+             </div>
+
+          </Card>
         </motion.div>
       )}
 

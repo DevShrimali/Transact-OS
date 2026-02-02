@@ -20,12 +20,7 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/app/components/ui/utils';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Cell } from 'recharts';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/app/components/ui/tooltip";
+
 
 import { container, item } from "@/app/components/ui/animations";
 
@@ -105,13 +100,13 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div className="space-y-1">
-          <Badge variant="outline" className="text-[10px] font-bold tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Executive Overview</Badge>
-          <h1 className="text-4xl font-medium tracking-tighter text-gray-900">Command Center</h1>
+          <Badge variant="outline" className="text-[10px] font-black tracking-[0.2em] px-2 py-0 border-blue-200 text-blue-700 uppercase">Executive Overview</Badge>
+          <h1 className="text-4xl font-black tracking-tighter text-gray-900">Command Center</h1>
           <p className="text-muted-foreground font-medium">Real-time operational dashboard and system status.</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex flex-col items-end mr-4">
-             <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">System Status</span>
+          <div className="flex flex-col items-end mr-4">
+             <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground hidden sm:block">System Status</span>
              <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

@@ -18,7 +18,8 @@ import {
   PanelLeft,
   Menu,
   Minimize,
-  Maximize
+  Maximize,
+  Search
 } from "lucide-react";
 import {
   Sidebar,
@@ -38,6 +39,15 @@ import {
   SidebarRail,
 } from "../ui/sidebar";
 import { cn } from "../ui/utils";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "../ui/command";
 
 
 export type Page =
@@ -98,10 +108,74 @@ const menuItems = [
 ];
 
 export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((open) => !open);
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  const runCommand = (command: () => void) => {
+    setOpen(false);
+    command();
+  };
+
   return (
     <SidebarProvider>
       <AppSidebar currentPage={currentPage} onNavigate={onNavigate} />
+      
+      {/* Global Command Palette */}
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder="Type a command or search..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Suggestions">
+            <CommandItem onSelect={() => runCommand(() => onNavigate('dashboard'))}>
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+            </CommandItem>
+            <CommandItem onSelect={() => runCommand(() => onNavigate('pos'))}>
+              <CreditCard className="mr-2 h-4 w-4" />
+              <span>POS Terminal</span>
+            </CommandItem>
+            <CommandItem onSelect={() => runCommand(() => onNavigate('stock'))}>
+               <BarChart3 className="mr-2 h-4 w-4" />
+               <span>Check Stock</span>
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Modules">
+             {menuItems.filter(i => i.type !== 'separator').map((item: any) => (
+                <CommandItem key={item.id} onSelect={() => runCommand(() => onNavigate(item.id))}>
+                   {item.icon && <item.icon className="mr-2 h-4 w-4" />}
+                   <span>{item.label}</span>
+                </CommandItem>
+             ))}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="System">
+             <CommandItem onSelect={() => runCommand(() => onNavigate('profile'))}>
+                <Users className="mr-2 h-4 w-4" />
+                <span>Profile Settings</span>
+             </CommandItem>
+             <CommandItem onSelect={() => runCommand(() => console.log("Logout"))}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log Out</span>
+             </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+
       <SidebarInset className="overflow-hidden flex flex-col h-screen">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-foreground">
+          Skip to main content
+        </a>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger className="-ml-1" />
           <div className="mr-4 hidden h-4 w-px bg-border md:block" />
@@ -112,9 +186,29 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
             </span>
           </div>
           <div className="ml-auto flex items-center gap-4">
+            {/* Search Trigger */}
+            <button
+               onClick={() => setOpen(true)}
+               className="hidden md:flex items-center gap-2 px-3 py-1.5 text-sm text-neutral-500 hover:text-foreground bg-neutral-100/50 hover:bg-neutral-100 border border-transparent hover:border-neutral-200 rounded-md transition-all mr-2"
+            >
+               <Search className="h-4 w-4" />
+               <span className="text-xs font-medium mr-2">Search...</span>
+               <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                  <span className="text-xs">⌘</span>K
+               </kbd>
+            </button>
+            <button
+               onClick={() => setOpen(true)}
+               className="md:hidden p-2 text-neutral-500 hover:text-foreground"
+               aria-label="Search"
+            >
+               <Search className="h-5 w-5" />
+            </button>
+
             <button
               className="flex items-center gap-3 hover:opacity-80 focus:outline-hidden"
               onClick={() => onNavigate("profile")}
+              aria-label="User Profile"
             >
               <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground border border-border">
                 AU
@@ -125,7 +219,7 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
             </button>
           </div>
         </header>
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main id="main-content" className="flex-1 overflow-auto p-6" tabIndex={-1}>{children}</main>
 
       </SidebarInset>
     </SidebarProvider>
@@ -164,8 +258,8 @@ const AppSidebar = ({ currentPage, onNavigate }: { currentPage: Page; onNavigate
         <SidebarGroup className="px-3">
            <div className="flex items-center justify-between px-2 py-4">
              <SidebarGroupLabel className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">Application</SidebarGroupLabel>
-             <button onClick={toggleFullscreen} className="p-1 hover:bg-accent rounded-md text-muted-foreground group-data-[collapsible=icon]:hidden opacity-50 hover:opacity-100 transition-opacity">
-                {isFullscreen ? <Minimize className="h-3.5 w-3.5" /> : <Maximize className="h-3.5 w-3.5" />}
+             <button onClick={toggleFullscreen} className="p-1 hover:bg-accent rounded-md text-muted-foreground group-data-[collapsible=icon]:hidden opacity-50 hover:opacity-100 transition-opacity" aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}>
+                {isFullscreen ? <Minimize className="h-3.5 w-3.5" aria-hidden="true" /> : <Maximize className="h-3.5 w-3.5" aria-hidden="true" />}
              </button>
            </div>
           <SidebarMenu className="gap-1.5">
