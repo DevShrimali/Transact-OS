@@ -29,6 +29,7 @@ import { ForgotPassword } from './pages/ForgotPassword';
 
 import { Layout, Page } from './components/wireframe/Layout';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { Toaster } from './components/ui/sonner';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('login');
@@ -94,6 +95,7 @@ export default function App() {
         </Layout>
       )}
       <ThemeSwitcher />
+      <Toaster />
     </>
   );
 }

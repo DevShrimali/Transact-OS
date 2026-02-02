@@ -23,6 +23,7 @@ import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Toolti
 
 
 import { container, item } from "@/app/components/ui/animations";
+import { HowToDialog } from '../components/wireframe/HowToDialog';
 
 export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }) {
   // Mock Data
@@ -270,6 +271,16 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: string) => void }
           </Card>
         </motion.div>
       </div>
+      <HowToDialog 
+         moduleName="dashboard-howto"
+         title="Command Center"
+         subtitle="Monitor real-time operations and improved efficiency."
+         steps={[
+            { title: "Key Metrics", description: "Track Global Asset Value and Stock Alerts at a glance with the top-level KPI cards." },
+            { title: "Velocity Analysis", description: "Use the bar chart to understand stock movement trends over daily, weekly, or monthly periods." },
+            { title: "Command Console", description: "Quickly access frequent modules like POS, Label Studio, or Stock Lookup directly from the dashboard." }
+         ]}
+      />
     </motion.div>
   );
 }

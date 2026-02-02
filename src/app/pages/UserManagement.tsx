@@ -21,6 +21,8 @@ import {
   Lock,
   Unlock
 } from "lucide-react";
+import { toast } from 'sonner';
+import { HowToDialog } from '../components/wireframe/HowToDialog';
 import {
   Card,
   CardContent,
@@ -399,13 +401,29 @@ export function UserManagement() {
               </div>
             <div className="pt-10 flex gap-4 mt-auto">
                  <Button variant="outline" className="flex-1 h-12 text-muted-foreground font-bold rounded-xl" onClick={() => setIsSheetOpen(false)}>Discard</Button>
-                 <Button className="flex-1 h-12 shadow-xl shadow-primary/20 font-black tracking-wide rounded-xl" onClick={() => setIsSheetOpen(false)}>
+                 <Button className="flex-1 h-12 shadow-xl shadow-primary/20 font-black tracking-wide rounded-xl" onClick={() => {
+                     setIsSheetOpen(false);
+                     toast.success("User Provisioned Successfully", {
+                        description: "Identity vector verified and access keys generated.",
+                        duration: 4000
+                     });
+                 }}>
                     Confirm Provisioning
                  </Button>
             </div>
          </div>
       </SheetContent>
       </Sheet>
+      <HowToDialog 
+         moduleName="user-howto"
+         title="Identity Management"
+         subtitle="Manage workspace access and personnel security."
+         steps={[
+            { title: "Directory Overview", description: "View all active personnel and their status. Use filters to narrow down by role or department." },
+            { title: "Provisioning", description: "Click 'Provision User' to onboard new staff. You'll need to define their core identity and deployment profile." },
+            { title: "Access Vectors", description: "Granularly control what modules each user can access via the permission matrix." }
+         ]}
+      />
     </motion.div>
   );
 }

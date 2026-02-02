@@ -1,37 +1,41 @@
 import { useState, useRef } from "react";
 import {
   Search,
-  ShoppingCart,
+  Scan,
   CreditCard,
-  User,
-  Printer,
+  Banknote,
+  Receipt,
+  RotateCcw,
   CheckCircle,
-  RefreshCcw,
   Plus,
+  User,
+  ShieldCheck,
+  Zap,
+  Printer,
+  UserPlus,
+  MapPin,
+  AlertTriangle,
+  X,
+  Minimize,
+  Maximize,
+  Building2,
+  ShoppingCart,
+  Wallet,
+  ChevronRight,
+  RefreshCcw,
+  History,
+  ArrowUpRight,
+  Package,
   Minus,
   ArrowRight,
   ArrowLeft,
-  UserPlus,
-  X,
-  AlertTriangle,
-  ShieldCheck,
-  MapPin,
   DollarSign,
   Clock,
-  Scan,
-  Package,
-  History,
-  Receipt,
-  Wallet,
-  Building2,
-  Zap,
-  ChevronRight,
-  ArrowUpRight,
   Layers,
-  Smartphone,
-  Maximize,
-  Minimize
-} from "lucide-react";
+  Smartphone
+} from 'lucide-react';
+import { toast } from 'sonner';
+import { HowToDialog } from '../components/wireframe/HowToDialog';
 import {
   Card,
   CardContent,
@@ -429,6 +433,10 @@ export function POS() {
   const handleCompletePayment = () => {
     if (canCompletePayment()) {
       setStep("receipt");
+     toast.success("Transaction Sealed Successfully", {
+        description: `Txn Ref: #1004A | Amount: $${total.toFixed(2)}`,
+        duration: 5000,
+     });
     }
   };
 
@@ -1508,6 +1516,17 @@ export function POS() {
           </div>
         </DialogContent>
       </Dialog>
+      <HowToDialog 
+        moduleName="pos-howto"
+        title="POS Terminal Usage"
+        subtitle="Quick guide to processing your first transaction."
+        steps={[
+           { title: "Select Items", description: "Browse the visual grid or use the Quick Search 'Cmd+K' to find products instantly." },
+           { title: "Managing Cart", description: "Tap items to add to cart. Use the 'Order Calculus' panel to adjust quantities or remove lines." },
+           { title: "Process Payment", description: "Click 'Initialize Escrow' to proceed. Select Split Payment to divide costs across multiple methods." },
+           { title: "Finalize", description: "Confirm the transaction to seal the deal and generate a verified digital receipt." }
+        ]}
+      />
       </div>
     </div>
   );
