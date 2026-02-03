@@ -90,7 +90,12 @@ export function CreateCompany({ onBack, onComplete }: CreateCompanyProps) {
   // Mock State for Form Data (to show interactivity in review)
   const [formData, setFormData] = useState({
     name: '',
-    address: '',
+    address1: '',
+    address2: '',
+    city: '',
+    zipCode: '',
+    state: '',
+    country: '',
     type: 'Manufacturing',
     location: '',
     taxId: '',
@@ -233,22 +238,62 @@ export function CreateCompany({ onBack, onComplete }: CreateCompanyProps) {
         <div className="space-y-4 rounded-lg border bg-card p-6 shadow-sm">
           <h3 className="font-semibold leading-none tracking-tight">Location Details</h3>
           <div className="space-y-2">
-            <Label htmlFor="address">Full Address</Label>
+            <Label htmlFor="address1">Address Line 1</Label>
             <Input 
-              id="address"
-              placeholder="Street address, City, State, Zip"
-              value={formData.address}
-              onChange={(e) => setFormData({...formData, address: e.target.value})}
+              id="address1"
+              placeholder="Street address, P.O. box"
+              value={formData.address1}
+              onChange={(e) => setFormData({...formData, address1: e.target.value})}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="hq">Headquarters Location</Label>
+            <Label htmlFor="address2">Address Line 2 (Optional)</Label>
             <Input 
-              id="hq"
-              placeholder="City, Country"
-              value={formData.location}
-              onChange={(e) => setFormData({...formData, location: e.target.value})}
+              id="address2"
+              placeholder="Apartment, suite, unit, building, floor, etc."
+              value={formData.address2}
+              onChange={(e) => setFormData({...formData, address2: e.target.value})}
             />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="city">City</Label>
+              <Input 
+                id="city"
+                placeholder="City"
+                value={formData.city}
+                onChange={(e) => setFormData({...formData, city: e.target.value})}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="zipCode">Zip / Postal Code</Label>
+              <Input 
+                id="zipCode"
+                placeholder="Zip Code"
+                value={formData.zipCode}
+                onChange={(e) => setFormData({...formData, zipCode: e.target.value})}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+             <div className="space-y-2">
+              <Label htmlFor="state">State / Province</Label>
+              <Input 
+                id="state"
+                placeholder="State"
+                value={formData.state}
+                onChange={(e) => setFormData({...formData, state: e.target.value})}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="country">Country</Label>
+              <Input 
+                id="country"
+                placeholder="Country"
+                value={formData.country}
+                onChange={(e) => setFormData({...formData, country: e.target.value})}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -762,12 +807,17 @@ export function CreateCompany({ onBack, onComplete }: CreateCompanyProps) {
                <Button variant="ghost" size="sm" onClick={() => setCurrentStep(1)} className="text-xs h-7">Edit</Button>
             </CardHeader>
             <CardContent className="pt-4">
-              <dl className="space-y-2 text-sm">
-                <div className="flex justify-between"><dt className="text-muted-foreground">Name:</dt> <dd className="font-medium">{formData.name || 'N/A'}</dd></div>
-                <div className="flex justify-between"><dt className="text-muted-foreground">Type:</dt> <dd className="font-medium">{formData.type}</dd></div>
-                <div className="flex justify-between"><dt className="text-muted-foreground">Tax ID:</dt> <dd className="font-medium">{formData.taxId || 'N/A'}</dd></div>
-                <div className="flex justify-between"><dt className="text-muted-foreground">Location:</dt> <dd className="font-medium">{formData.location || 'N/A'}</dd></div>
-              </dl>
+                <dl className="space-y-2 text-sm">
+                 <div className="flex justify-between"><dt className="text-muted-foreground">Name:</dt> <dd className="font-medium">{formData.name || 'N/A'}</dd></div>
+                 <div className="flex justify-between"><dt className="text-muted-foreground">Type:</dt> <dd className="font-medium">{formData.type}</dd></div>
+                 <div className="flex justify-between"><dt className="text-muted-foreground">Tax ID:</dt> <dd className="font-medium">{formData.taxId || 'N/A'}</dd></div>
+                 <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Address:</dt> 
+                    <dd className="font-medium text-right max-w-[200px] truncate">
+                        {[formData.address1, formData.city, formData.country].filter(Boolean).join(', ')}
+                    </dd>
+                 </div>
+               </dl>
             </CardContent>
           </Card>
 
