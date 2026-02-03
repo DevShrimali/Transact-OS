@@ -258,7 +258,10 @@ const AppSidebar = ({ currentPage, onNavigate }: { currentPage: Page; onNavigate
       <SidebarContent className="gap-0 py-2">
         <SidebarGroup className="px-3">
            <div className="flex items-center justify-between px-2 py-4">
-             <SidebarGroupLabel>Application</SidebarGroupLabel>
+             <SidebarGroupLabel className="w-full">
+               Application
+               <div className="ml-2 h-px flex-1 bg-sidebar-foreground/20" />
+             </SidebarGroupLabel>
              <button onClick={toggleFullscreen} className="p-1 hover:bg-accent rounded-md text-muted-foreground group-data-[collapsible=icon]:hidden opacity-50 hover:opacity-100 transition-opacity" aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}>
                 {isFullscreen ? <Minimize className="h-3.5 w-3.5" aria-hidden="true" /> : <Maximize className="h-3.5 w-3.5" aria-hidden="true" />}
              </button>
@@ -267,8 +270,9 @@ const AppSidebar = ({ currentPage, onNavigate }: { currentPage: Page; onNavigate
             {menuItems.map((item) => {
               if (item.type === "separator") {
                 return (
-                  <SidebarGroupLabel key={item.id} className="mt-6 mb-2 group-data-[collapsible=icon]:hidden">
+                  <SidebarGroupLabel key={item.id} className="mt-6 mb-2 group-data-[collapsible=icon]:hidden w-full">
                     {item.label}
+                    <div className="ml-2 h-px flex-1 bg-sidebar-foreground/20" />
                   </SidebarGroupLabel>
                 );
               }
