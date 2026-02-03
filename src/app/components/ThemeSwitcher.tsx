@@ -11,15 +11,11 @@ const themeCategories = [
       { name: "zinc", label: "Default", color: "bg-zinc-900" },
       { name: "blue", label: "Professional", color: "bg-blue-600" },
       { name: "teal", label: "Fresh", color: "bg-teal-600" },
-      { name: "violet", label: "Creative", color: "bg-violet-600" },
-      { name: "orange", label: "Vibrant", color: "bg-orange-600" },
     ],
   },
   {
     name: "Premium Themes",
     themes: [
-      { name: "coolors", label: "Ocean", color: "bg-gradient-to-br from-cyan-500 to-blue-600" },
-      { name: "huemint", label: "Mint", color: "bg-emerald-500" },
       { name: "sunset", label: "Sunset", color: "bg-gradient-to-br from-purple-600 to-orange-500" },
     ],
   },

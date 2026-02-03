@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Search,
   Scan,
@@ -32,7 +32,9 @@ import {
   DollarSign,
   Clock,
   Layers,
-  Smartphone
+  Smartphone,
+  Ticket,
+  Percent
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { HowToDialog } from '../components/wireframe/HowToDialog';
@@ -132,6 +134,12 @@ export function POS() {
   >(null);
   const [currentPaymentAmount, setCurrentPaymentAmount] =
     useState("");
+  const [manualRoundOff, setManualRoundOff] = useState<string | null>(null);
+
+  // Reset manual round off when cart changes
+  useEffect(() => {
+    setManualRoundOff(null);
+  }, [cart]);
 
   // Pay Later Logic States
   const [showPayLaterModal, setShowPayLaterModal] =
@@ -228,7 +236,13 @@ export function POS() {
     (acc, item) => acc + item.tax * item.qty,
     0,
   );
-  const total = subtotal + taxTotal;
+  const rawTotal = subtotal + taxTotal;
+  const autoRoundOff = Math.round(rawTotal) - rawTotal;
+  const roundOffAmount = manualRoundOff !== null && !isNaN(parseFloat(manualRoundOff)) 
+    ? parseFloat(manualRoundOff) 
+    : autoRoundOff;
+  
+  const total = rawTotal + roundOffAmount;
 
   const totalPaid = paymentMethods.reduce(
     (sum, pm) => sum + pm.amount,
@@ -318,9 +332,9 @@ export function POS() {
           phone: "(555) 123-4567",
           email: "john.doe@example.com",
           address: "123 Pine St, Seattle, WA",
-          creditLimit: 5000,
-          availableLimit: 4200,
-          balance: 800,
+          creditLimit: 10000,
+          availableLimit: 10000,
+          balance: 0,
           status: "good",
           recentTransactions: [
             { date: "2023-10-15", amount: 150.0 },
@@ -730,6 +744,14 @@ export function POS() {
                                 <Plus className="w-3 h-3" />
                               </Button>
                             </div>
+                            <div className="flex items-center gap-2 mt-1">
+                               <div className="relative">
+                                  <Input className="h-6 w-16 text-[10px] bg-slate-50 border border-slate-200 font-bold text-center px-1" placeholder="Disc %" />
+                               </div>
+                               <Button variant="ghost" size="icon" className="h-6 w-6 rounded-md hover:bg-primary/10 hover:text-primary transition-colors" title="Fetch Coupon"> 
+                                  <Ticket className="h-3 w-3" /> 
+                               </Button>
+                            </div>
                           </div>
                         </motion.div>
                       ))}
@@ -743,6 +765,17 @@ export function POS() {
                   </CardContent>
                   <CardFooter className="p-8 bg-slate-50/50 flex flex-col gap-6 border-t border-slate-100 mt-auto">
                     <div className="space-y-3 w-full">
+                      {/* Bill Level Discount */}
+                      <div className="flex gap-2 mb-4 pb-4 border-b border-slate-200/60">
+                          <div className="relative flex-1 group">
+                              <Percent className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/50 transition-colors group-hover:text-primary" />
+                              <Input placeholder="Bill Discount..." className="pl-9 h-10 border-none bg-white shadow-sm font-bold text-xs" />
+                          </div>
+                          <Button variant="outline" className="h-10 px-3 font-black text-[10px] uppercase tracking-wider gap-2 border-slate-200 bg-white hover:bg-slate-50 shadow-sm">
+                              <Ticket className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Master</span>
+                          </Button>
+                      </div>
+
                       <div className="flex justify-between text-xs font-black uppercase tracking-widest text-muted-foreground/60">
                         <span>Physical Valuation</span>
                         <span>${subtotal.toFixed(2)}</span>
@@ -754,6 +787,31 @@ export function POS() {
                       <div className="flex justify-between text-xs font-black uppercase tracking-widest text-muted-foreground/60">
                         <span>SGST (3.25%)</span>
                         <span>${(taxTotal / 2).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs font-black uppercase tracking-widest text-muted-foreground/60">
+                        <span>Round Off</span>
+                        <div className="flex items-center gap-2">
+                           {manualRoundOff !== null && (
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-4 w-4 text-muted-foreground hover:text-primary p-0"
+                                onClick={() => setManualRoundOff(null)}
+                                title="Reset to Auto"
+                              >
+                                 <RotateCcw className="h-3 w-3" />
+                              </Button>
+                           )}
+                           <Input 
+                              className={cn(
+                                "h-6 w-20 text-right text-[10px] font-bold border-none bg-transparent focus-visible:ring-0 p-0",
+                                roundOffAmount > 0 ? "text-emerald-500" : (roundOffAmount < 0 ? "text-rose-500" : "")
+                              )}
+                              value={manualRoundOff !== null ? manualRoundOff : roundOffAmount.toFixed(2)}
+                              onChange={(e) => setManualRoundOff(e.target.value)}
+                              placeholder="0.00"
+                           />
+                        </div>
                       </div>
                       <Separator className="bg-slate-200" />
                       <div className="flex justify-between font-black text-3xl tracking-tighter items-end">

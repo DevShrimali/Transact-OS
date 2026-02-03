@@ -26,6 +26,7 @@ import { CreateCompany } from './pages/CreateCompany';
 import { Profile } from './pages/Profile';
 import { UserManagement } from './pages/UserManagement';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { DesignSystem } from './pages/DesignSystem';
 
 import { Layout, Page } from './components/wireframe/Layout';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
@@ -42,6 +43,7 @@ export default function App() {
           onCreateAccount={() => setCurrentPage('create-company')}
           onForgotPassword={() => setCurrentPage('forgot-password')}
           onStaffLogin={() => setCurrentPage('staff-login')}
+          onNavigate={(page) => setCurrentPage(page as Page)}
         />
       );
       case 'staff-login': return (
@@ -81,13 +83,14 @@ export default function App() {
       case 'reports': return <Reports />;
       case 'tax-config': return <TaxConfig />;
       case 'company-settings': return <CompanySettings />;
+      case 'design-system': return <DesignSystem />;
       default: return <Dashboard onNavigate={(page) => setCurrentPage(page as Page)} />;
     }
   };
 
   return (
     <>
-      {currentPage === 'login' || currentPage === 'staff-login' || currentPage === 'create-company' || currentPage === 'forgot-password' ? (
+      {currentPage === 'login' || currentPage === 'staff-login' || currentPage === 'create-company' || currentPage === 'forgot-password' || currentPage === 'design-system' ? (
         renderPage()
       ) : (
         <Layout currentPage={currentPage} onNavigate={setCurrentPage}>

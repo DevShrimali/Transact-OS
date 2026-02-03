@@ -74,7 +74,8 @@ export type Page =
   | "users"
   | "forgot-password"
   | "tax-config"
-  | "company-settings";
+  | "company-settings"
+  | "design-system";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -257,7 +258,7 @@ const AppSidebar = ({ currentPage, onNavigate }: { currentPage: Page; onNavigate
       <SidebarContent className="gap-0 py-2">
         <SidebarGroup className="px-3">
            <div className="flex items-center justify-between px-2 py-4">
-             <SidebarGroupLabel className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">Application</SidebarGroupLabel>
+             <SidebarGroupLabel>Application</SidebarGroupLabel>
              <button onClick={toggleFullscreen} className="p-1 hover:bg-accent rounded-md text-muted-foreground group-data-[collapsible=icon]:hidden opacity-50 hover:opacity-100 transition-opacity" aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}>
                 {isFullscreen ? <Minimize className="h-3.5 w-3.5" aria-hidden="true" /> : <Maximize className="h-3.5 w-3.5" aria-hidden="true" />}
              </button>
@@ -266,9 +267,9 @@ const AppSidebar = ({ currentPage, onNavigate }: { currentPage: Page; onNavigate
             {menuItems.map((item) => {
               if (item.type === "separator") {
                 return (
-                  <div key={item.id} className="mt-6 mb-2 px-2 group-data-[collapsible=icon]:hidden">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50">{item.label}</p>
-                  </div>
+                  <SidebarGroupLabel key={item.id} className="mt-6 mb-2 group-data-[collapsible=icon]:hidden">
+                    {item.label}
+                  </SidebarGroupLabel>
                 );
               }
               const Icon = item.icon as React.ElementType;

@@ -3,11 +3,11 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/app/components/ui/card';
-import { Users, ShieldCheck, Command } from 'lucide-react';
+import { Users, ShieldCheck, Command, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ProjectFlowModal } from '@/app/components/ProjectFlowModal';
 
-export function Login({ onLogin, onCreateAccount, onForgotPassword, onStaffLogin }: { onLogin: () => void; onCreateAccount?: () => void; onForgotPassword?: () => void; onStaffLogin?: () => void }) {
+export function Login({ onLogin, onCreateAccount, onForgotPassword, onStaffLogin, onNavigate }: { onLogin: () => void; onCreateAccount?: () => void; onForgotPassword?: () => void; onStaffLogin?: () => void; onNavigate?: (page: string) => void }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = () => {
@@ -136,6 +136,17 @@ export function Login({ onLogin, onCreateAccount, onForgotPassword, onStaffLogin
            <p className="text-[10px] text-muted-foreground/30 font-medium">
              Encrypted connection established • 256-bit SSL
            </p>
+           
+           {/* Design System Link */}
+           <button 
+             onClick={() => onNavigate && onNavigate('design-system')}
+             className="inline-flex items-center gap-2 mt-4 text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-all group"
+           >
+              <div className="p-1.5 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                 <Palette className="w-3 h-3" />
+              </div>
+              UI System Documentation
+           </button>
         </div>
       </motion.div>
     </div>

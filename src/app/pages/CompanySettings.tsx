@@ -13,7 +13,8 @@ import {
   Layers,
   Globe2,
   Clock,
-  Compass
+  Compass,
+  Upload
 } from "lucide-react";
 import {
   Card,
@@ -54,6 +55,9 @@ export function CompanySettings() {
           <p className="text-muted-foreground font-medium">Define the core characteristics and operational jurisdiction of your enterprise.</p>
         </div>
         <div className="flex items-center gap-3">
+            <Button variant="outline" className="h-12 px-6 gap-2 border-muted bg-background shadow-sm font-bold">
+                <Upload className="h-4 w-4" /> Import Data
+            </Button>
             <Button variant="ghost" className="h-12 px-6 text-muted-foreground font-bold hover:bg-muted">Discard Updates</Button>
             <Button className="h-12 px-8 gap-2 shadow-xl shadow-primary/25 font-black uppercase text-xs tracking-widest">
               <Save className="h-4 w-4" /> Save Configuration

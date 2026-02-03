@@ -149,6 +149,20 @@ export function VendorList() {
                           </Select>
                         </div>
                       </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Partner Status</Label>
+                        <Select>
+                          <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-emerald-500/20">
+                            <SelectValue placeholder="Select Status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="active" className="font-bold">Active</SelectItem>
+                            <SelectItem value="inactive" className="font-bold">Inactive</SelectItem>
+                            <SelectItem value="on-hold" className="font-bold">On Hold</SelectItem>
+                            <SelectItem value="blacklisted" className="font-bold text-red-600">Blacklisted</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </section>
 
@@ -195,13 +209,59 @@ export function VendorList() {
                       <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
                       <h3 className="font-black text-xl tracking-tight">Address</h3>
                     </div>
-                    <div className="space-y-2.5">
-                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Street Address</Label>
-                      <textarea 
-                        id="address"
-                        className="flex min-h-[100px] w-full rounded-xl border-none bg-muted/50 px-4 py-3 text-sm font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Street, Building, Unit..."
-                      />
+                    <div className="space-y-4">
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Address Line 1</Label>
+                        <Input 
+                          id="address1" 
+                          placeholder="Street Address, P.O. Box, Company Name" 
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                        />
+                      </div>
+                      <div className="space-y-2.5">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Address Line 2</Label>
+                        <Input 
+                          id="address2" 
+                          placeholder="Apartment, Suite, Unit, Building, Floor, etc." 
+                          className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">City</Label>
+                          <Input 
+                            id="city" 
+                            placeholder="City" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Zip Code</Label>
+                          <Input 
+                            id="zipcode" 
+                            placeholder="Zip / Postal Code" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">State / Province</Label>
+                          <Input 
+                            id="state" 
+                            placeholder="State / Province / Region" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                        <div className="space-y-2.5">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Country</Label>
+                          <Input 
+                            id="country" 
+                            placeholder="Country" 
+                            className="h-12 border-none bg-muted/50 focus-visible:ring-emerald-500/20 font-bold"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </section>
 

@@ -14,8 +14,10 @@ import {
   AlertTriangle, 
   Layers, 
   TrendingUp,
-  ScanBarcode
+  ScanBarcode,
+  Power
 } from 'lucide-react';
+import { Switch } from '@/app/components/ui/switch';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { 
   Sheet, 
@@ -161,8 +163,20 @@ export function ItemList() {
                                <SelectContent>
                                  <SelectItem value="electronics" className="font-bold">Electronics</SelectItem>
                                  <SelectItem value="tools" className="font-bold">Tools</SelectItem>
-                                 <SelectItem value="raw" className="font-bold">Raw Materials</SelectItem>
-                                 <SelectItem value="finished" className="font-bold">Finished Goods</SelectItem>
+                                 <SelectItem value="peripherals" className="font-bold">Peripherals</SelectItem>
+                               </SelectContent>
+                             </Select>
+                          </div>
+                          <div className="space-y-2.5">
+                             <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Item Type</Label>
+                             <Select>
+                               <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-primary/20">
+                                 <SelectValue placeholder="Select Type" />
+                               </SelectTrigger>
+                               <SelectContent>
+                                 <SelectItem value="raw" className="font-bold">RAW</SelectItem>
+                                 <SelectItem value="sfg" className="font-bold">SFG</SelectItem>
+                                 <SelectItem value="fg" className="font-bold">FG</SelectItem>
                                </SelectContent>
                              </Select>
                           </div>
@@ -208,6 +222,85 @@ export function ItemList() {
                                </SelectContent>
                              </Select>
                           </div>
+                       </div>
+                       
+                       <div className="grid grid-cols-2 gap-6">
+                         <div className="space-y-2.5">
+                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Valuation Method</Label>
+                            <Select>
+                              <SelectTrigger className="h-12 border-none bg-muted/50 font-bold focus:ring-primary/20">
+                                <SelectValue placeholder="Select Method" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="fifo" className="font-bold">FIFO</SelectItem>
+                                <SelectItem value="lifo" className="font-bold">LIFO</SelectItem>
+                                <SelectItem value="exd" className="font-bold">Exd</SelectItem>
+                                <SelectItem value="wavg" className="font-bold">WAVG</SelectItem>
+                              </SelectContent>
+                            </Select>
+                         </div>
+                       </div>
+                       
+                       <div className="grid grid-cols-2 gap-6">
+                          <div className="space-y-2.5">
+                             <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Min Stock</Label>
+                             <Input 
+                                id="min_stock" 
+                                type="number" 
+                                placeholder="0" 
+                                className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold"
+                             />
+                          </div>
+                          <div className="space-y-2.5">
+                             <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground/70 ml-1">Max Stock</Label>
+                             <Input 
+                                id="max_stock" 
+                                type="number" 
+                                placeholder="0" 
+                                className="h-12 border-none bg-muted/50 focus-visible:ring-primary/20 font-bold"
+                             />
+                          </div>
+                       </div>
+                    </section>
+
+                    {/* Controls */}
+                    <section className="space-y-6">
+                       <div className="flex items-center gap-2 mb-2">
+                          <div className="w-1.5 h-6 bg-amber-500 rounded-full" />
+                          <h3 className="font-black text-xl tracking-tight">System Controls</h3>
+                       </div>
+                       <div className="bg-muted/30 rounded-xl p-6 space-y-6 border border-muted/50">
+                         <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                               <Label className="text-base font-bold text-gray-900">Batch Controlled</Label>
+                               <p className="text-xs text-muted-foreground font-medium">Enable batch tracking for this item</p>
+                            </div>
+                            <Switch />
+                         </div>
+                         <div className="h-px bg-muted-foreground/10" />
+                         <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                               <Label className="text-base font-bold text-gray-900">Serial Controlled</Label>
+                               <p className="text-xs text-muted-foreground font-medium">Enable unique serial number tracking</p>
+                            </div>
+                            <Switch />
+                         </div>
+                         <div className="h-px bg-muted-foreground/10" />
+                         <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                               <Label className="text-base font-bold text-gray-900">Expiry Controlled</Label>
+                               <p className="text-xs text-muted-foreground font-medium">Track expiration dates for stock</p>
+                            </div>
+                            <Switch />
+                         </div>
+                         <div className="h-px bg-muted-foreground/10" />
+                         <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                               <Label className="text-base font-bold text-gray-900">Item Status (Active)</Label>
+                               <p className="text-xs text-muted-foreground font-medium">Toggle item availability in system</p>
+                            </div>
+                            <Switch defaultChecked />
+                         </div>
                        </div>
                     </section>
 
